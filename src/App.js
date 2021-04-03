@@ -7,7 +7,8 @@ import NavBar from './Components/NavBar'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from './Pages/Home';
 import About from './Pages/About';
-import Error from './Pages/Error'
+import Error from './Pages/Error';
+import Footer from './Components/Footer';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
                 <Route exact path='/about'><About /></Route>
                 <Route exact path='*'><Error /></Route>
             </Switch>
+            <Footer />
         </Router>
     </>
   );
