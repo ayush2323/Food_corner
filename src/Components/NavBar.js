@@ -7,17 +7,26 @@ import {Modal, Button} from 'react-bootstrap'
 const NavBar = () => {
     const [modalShow, setModalShow] = React.useState(false);
     return (
-        <nav className="navbar">
-            <div className="nav-center">
-                <Link style={{textDecoration: "none"}} to='/'>
-                    <h2>Food <span style={{color: "red"}}>Chef</span></h2>
-                </Link>
-                <ul className="nav-links">
+        <nav className="nav-bar">
+               <div style={{flex:2}}>
+                    <h2 style={{fontSize:'2.5rem'}}>Food <span style={{color: "red"}}>Chef</span></h2>
+                </div>
+                <div style={{flex:3}}>
+                <ul className="nav-links" >
                     <li>
-                        <Link to='/'>Home</Link>
+                        <Link className="nav-option" to='/'>Home</Link>
                     </li>
                     <li>
-                        <Link to='/about'>About</Link>
+                        <Link className="nav-option" to='/about'>About</Link>
+                    </li>
+                    <li>
+                        <Link className="nav-option" to='/about'>Testimonials</Link>
+                    </li>
+                    <li>
+                        <Link className="nav-option" to='/about'>Login/Register</Link>
+                    </li>
+                    <li>
+                        <Link className="nav-option" to='/about'>Contact Us</Link>
                     </li>
                     <li>
                     <Button variant="secondary" onClick={() => setModalShow(true)}>
@@ -30,7 +39,7 @@ const NavBar = () => {
                     />
                     </li>
                 </ul>
-            </div>
+                </div>
         </nav>
     )
 }
