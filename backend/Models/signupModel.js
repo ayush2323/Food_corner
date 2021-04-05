@@ -1,31 +1,46 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
 
 const signupTemplete = new mongoose.Schema({
     fullName : {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     email: {
         type: String,
         require: true,
-        unique: true
+        unique: true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("Email is invalid")
+            }
+        }
     },
     phone: {
         type: Number,
         require: true,
-        unique: true
+        unique: true,
+        maxlength: 10,
+        minlenth: 10
     },
-    restaurantName: {
+    role: {
         type: String,
         require: true
     },
     address: {
         type: String,
-        require: true
+        require: true,
+        trim: true
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        validate(value){
+            if(!validator.isStrongPassword(value)){
+                throw new Error("password is not strong")
+            }
+        }
     },
     date: {
         type: Date,
@@ -33,4 +48,4 @@ const signupTemplete = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('owner_signup', signupTemplete)
+module.exports = mongoose.model('user_signup', signupTemplete)

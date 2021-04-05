@@ -8,15 +8,15 @@ router.post("/signup", async (req, res) => {
     const saltPassword = await bcrypt.genSalt(10)
     const securePassword = await bcrypt.hash(req.body.password, saltPassword)
 
-    const signedUpOwner = new signupTemplete({
+    const signedUpUser = new signupTemplete({
         fullName: req.body.fullName,
         email: req.body.email,
         phone: req.body.phone,
-        restaurantName: req.body.restaurantName,
+        role: req.body.role,
         address: req.body.address,
         password: securePassword
     })
-    signedUpOwner.save()
+    signedUpUser.save()
     .then(data => {
         res.json(data)
     }).catch(error => {
