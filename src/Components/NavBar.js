@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import "../CSS/NavBar.css"
+import SignUpPopUp from './SignupPopUp'
+import {Modal, Button} from 'react-bootstrap'
 
 const NavBar = () => {
+    const [modalShow, setModalShow] = React.useState(false);
     return (
         <nav className="navbar">
             <div className="nav-center">
@@ -16,10 +19,22 @@ const NavBar = () => {
                     <li>
                         <Link to='/about'>About</Link>
                     </li>
+                    <li>
+                    <Button variant="secondary" onClick={() => setModalShow(true)}>
+                        Sign up
+                    </Button>
+
+                    <SignUpPopUp
+                        show={modalShow}
+                        onHide={() => setModalShow(false)}
+                    />
+                    </li>
                 </ul>
             </div>
         </nav>
     )
 }
+
+// func
 
 export default NavBar

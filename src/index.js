@@ -6,11 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    {/* <ContextProvider> */}
-      <App />
-    {/* </ContextProvider> */}
-  </React.StrictMode>,
+      <App />,
   document.getElementById('root')
 );
 

@@ -2,15 +2,19 @@ const express = require('express')
 const router = express.Router()
 const signupTemplete = require("../Models/signupModel")
 const dishTemplete = require("../Models/dishModel")
+const bcrypt = require('bcrypt')
 
-router.post("/signup", (req, res) => {
+router.post("/signup", async (req, res) => {
+    const saltPassword = await bcrypt.genSalt(10)
+    const securePassword = await bcrypt.hash(req.body.password, saltPassword)
+
     const signedUpOwner = new signupTemplete({
         fullName: req.body.fullName,
         email: req.body.email,
         phone: req.body.phone,
         restaurantName: req.body.restaurantName,
         address: req.body.address,
-        password: req.body.password
+        password: securePassword
     })
     signedUpOwner.save()
     .then(data => {

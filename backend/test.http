@@ -9,15 +9,3 @@
 #     "address": "h.no 125",
 #     "password": "password"
 # }
-
-POST http://localhost:4000/app/dish
-Content-Type: application/json
-
-{
-    "ItemName":"hot dog",
-    "ItemImage": "img.jpg",
-    "ItemDiscription": "our special dish",
-    "ItemCatagory": "North Indian",
-    "ItemType": "veg",
-    "price": 100
-}
