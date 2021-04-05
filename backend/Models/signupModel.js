@@ -33,4 +33,4 @@ const signupTemplete = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('ownerSignup', signupTemplete)
+module.exports = mongoose.model('owner_signup', signupTemplete)
