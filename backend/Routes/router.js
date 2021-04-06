@@ -1,22 +1,40 @@
 const express = require('express')
 const router = express.Router()
 const signupTemplete = require("../Models/signupModel")
+const restaurantTemplete = require("../Models/restaurantModel")
 const dishTemplete = require("../Models/dishModel")
 const bcrypt = require('bcrypt')
-// const user_data = require("../")
+const jwt = require("jsonwebtoken")
 
+// sign up validation
 router.post("/signup", async (req, res) => {
     const saltPassword = await bcrypt.genSalt(10)
     const securePassword = await bcrypt.hash(req.body.password, saltPassword)
-
-    const signedUpUser = new signupTemplete({
-        fullName: req.body.fullName,
-        email: req.body.email,
-        phone: req.body.phone,
-        role: req.body.role,
-        address: req.body.address,
-        password: securePassword
-    })
+    const roleType = req.body.role
+    let signedUpUser;
+    const restaurant_data = "nothing"
+    if(roleType === 'owner') {
+        signedUpUser = new signupTemplete({
+            fullName: req.body.fullName,
+            email: req.body.email,
+            phone: req.body.phone,
+            role: roleType,
+            address: req.body.address,
+            password: securePassword,
+            restaurant: []
+        })
+    } else {
+        signedUpUser = new signupTemplete({
+            fullName: req.body.fullName,
+            email: req.body.email,
+            phone: req.body.phone,
+            role: roleType,
+            address: req.body.address,
+            password: securePassword,
+        })
+    }
+    // console.log(signedUpUser)
+    const token = await signedUpUser.generateAuthToken()
     signedUpUser.save()
     .then(data => {
         res.json(data)
@@ -25,6 +43,19 @@ router.post("/signup", async (req, res) => {
     })
 })
 
+// update profile
+router.patch("/signup/:id", async (req, res) => {
+    try {
+        const _id = req.params.id
+        const updateRestaurant = await signupTemplete.findByIdAndUpdate(_id, req.body, {new: true})
+        console.log("line 50", updateRestaurant)
+        res.send(updateRestaurant)
+    } catch(e) {
+        res.status(404).send(e)
+    }
+})
+
+// login validation
 router.post("/login", async (req, res) => {
     try {
         const email = req.body.email
@@ -33,19 +64,22 @@ router.post("/login", async (req, res) => {
 
         const isMatch = bcrypt.compare(password, userEmail.password)
 
+        const token = await userEmail.generateAuthToken()
+        console.log(token)
+
         if(isMatch) {
             if(userEmail.role === 'owner') {
                 console.log("login successfull")
-                res.status(201)
+                res.status(201).send("owner login successfull")
             } else {
-                res.status(201)
+                res.status(201).send("customer login successfull")
             }
         } else {
             console.log("not matching")
-            res.status(201)
+            res.status(201).send("Incorrect email or password")
         }
     } catch(e) {
-        res.status(40).send("Incorrect email or password")
+        res.status(400)
     }
 })
 
@@ -66,15 +100,5 @@ router.post("/dish", (req, res) => {
         res.json(error)
     })
 })
-
-// router.get("/dish", async (res, req) => {
-//     try {
-//         const dishes = await dishData.find({});
-//         console.log(dishes)
-//         res.send(dishes)
-//     } catch(e) {
-//         res.send(e)
-//     }
-// })
 
 module.exports = router

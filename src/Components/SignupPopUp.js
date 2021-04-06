@@ -50,7 +50,7 @@ function SignupPopUp(props) {
 
         axios.post('http://localhost:4000/app/signup', registered)
             .then(res => console.log(res.data))
-            .then(window.location = "/")
+            .then(window.location = "/owner_dashboard")
 
         setName('')
         setEmail('')
@@ -80,7 +80,7 @@ function SignupPopUp(props) {
         axios.post('http://localhost:4000/app/login', loginDetail)
             .then(res => console.log(res.data))
             .catch(e => console.error(e))
-            // .then(window.location = "/")
+        // .then(window.location = "/owner_dashboard")
     }
 
     const showSignupOrLogin = () => {
@@ -91,8 +91,10 @@ function SignupPopUp(props) {
                     <FormCol name={"Email"} sendName={"email"} value={email} controlId={'Name'} type={"email"} placeholder={"Enter email"} changeHandler={emailHandler} />
                     <FormCol name={"Phone"} sendName={"phone"} value={phone} controlId={'Phone'} type={"number"} placeholder={"Enter phone"} changeHandler={phoneHandler} />
                     <div key={`default-radio`} className="mb-3">
+                    <div className="adjust_radio">
                         <Form.Check value="owner" onClick={handleRadio} type="radio" id={`default-radio`} name="role" label={`Owner`} />
                         <Form.Check value="customer" onClick={handleRadio} type="radio" id={`radio`} name="role" label={`Customer`} />
+                    </div>
                     </div>
                     <FormCol name={"Address"} sendName={"address"} value={address} controlId={'Address'} type={"text"} placeholder={"Enter Address"} changeHandler={addressHandler} />
                     <FormCol name={"Password"} sendName={"password"} value={password} controlId={'Password'} type={"password"} placeholder={"Enter Password"} changeHandler={passwordHandler} />
@@ -126,10 +128,10 @@ function SignupPopUp(props) {
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                    <Button variant="primary" onClick={showSignUpPage} default>Sign Up</Button>
-                    <Button variant="primary" onClick={showLoginPage}>Log In</Button>
-                    </Modal.Title>
+                        <div className="adjust_btn">
+                            <Button variant="primary" onClick={showSignUpPage} default>Sign Up</Button>
+                            <Button variant="primary" onClick={showLoginPage}>Log In</Button>
+                        </div>
                 </Modal.Header>
                 <Modal.Body>
                     {showSignupOrLogin()}

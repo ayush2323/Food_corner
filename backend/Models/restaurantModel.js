@@ -14,7 +14,7 @@ const RestaurantTemplete = new mongoose.Schema({
     restaurantAddress: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
         trim: true
     },
     restaurantOwner: {
@@ -25,7 +25,7 @@ const RestaurantTemplete = new mongoose.Schema({
     restaurantPhone: {
         type: Number,
         required: true,
-        unique: true
+        // unique: true
     }
 })
 

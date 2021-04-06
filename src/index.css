@@ -50,3 +50,17 @@ link {
   text-align: center;
   text-transform: capitalize;
 }
+
+.adjust_btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.adjust_radio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+}

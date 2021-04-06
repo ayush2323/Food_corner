@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const jwt = require("jsonwebtoken")
 
 const signupTemplete = new mongoose.Schema({
     fullName : {
@@ -42,10 +43,49 @@ const signupTemplete = new mongoose.Schema({
             }
         }
     },
+    restaurant: [{
+        restaurantName: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        restaurantDiscription: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        restaurantAddress: {
+            type: String,
+            required: true,
+            // unique: true,
+            trim: true
+        },
+        restaurantPhone: {
+            type: Number,
+            required: true,
+        }
+    }],
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }],
     date: {
         type: Date,
         default: Date.now
     }
 })
+
+signupTemplete.methods.generateAuthToken = async function() {
+    try {
+        const token = jwt.sign({_id: this._id.toString()}, "qwertyuiopasdfghjklzxcvbnmqwertyuiop")
+        this.tokens = this.tokens.concat({token})
+        await this.save()
+        return token
+    } catch(e) {
+        console.log(e)
+    }
+}
 
 module.exports = mongoose.model('user_signup', signupTemplete)
