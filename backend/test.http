@@ -2,8 +2,8 @@
 # Content-Type: application/json
 
 # {
-#     "fullName": "xyz",
-#     "email": "abc123@gmail.com",
+#     "fullName": "abc",
+#     "email": "abc1235@gmail.com",
 #     "phone": 999909999,
 #     "role": "owner",
 #     "address": "h.no 125",
@@ -13,13 +13,15 @@
 PATCH http://localhost:4000/app/signup/606bcb6e0a7e002a30d67440
 Content-Type: : application/json
 
-# {
-        # {
-            # "restaurantName": "food best",
-            # "restaurantDiscription": "5 star",
-            # "restaurantAddress": "delhi",
-            # "restaurantOwner": "abc",
-            # "restaurantPhone": 9998887773
-        # ]
-    "email": "abc1234@gmail.com"
-# }
+{
+    "restaurant": [
+        {
+            "restaurantName": "food best",
+            "restaurantDiscription": "5 star",
+            "restaurantAddress": "delhi",
+            "restaurantOwner": "abc",
+            "restaurantPhone": 9998887773
+        }
+    ],  
+    "email": "abc12345@gmail.com"
+}

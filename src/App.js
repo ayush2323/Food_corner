@@ -19,7 +19,7 @@ function App() {
             <Switch>
                 <Route exact path='/'><Home /></Route>
                 <Route exact path='/about'><About /></Route>
-                <Route exact path='/owner_dashboard'><OwnerDashboard /></Route>
+                <Route exact path='/owner_dashboard/:id'><OwnerDashboard /></Route>
                 <Route exact path='*'><Error /></Route>
             </Switch>
             <Footer />

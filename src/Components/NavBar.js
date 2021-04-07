@@ -36,3 +36,7 @@ const NavBar = () => {
 }
 
 export default NavBar
+
+// git branch -M main
+// git remote add origin https://github.com/ayush2323/temp.git
+// git push -u origin main

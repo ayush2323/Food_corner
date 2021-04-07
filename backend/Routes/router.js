@@ -1,10 +1,11 @@
+require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const signupTemplete = require("../Models/signupModel")
-const restaurantTemplete = require("../Models/restaurantModel")
 const dishTemplete = require("../Models/dishModel")
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
+const cookieParser = require('cookie-parser')
 
 // sign up validation
 router.post("/signup", async (req, res) => {
@@ -12,7 +13,6 @@ router.post("/signup", async (req, res) => {
     const securePassword = await bcrypt.hash(req.body.password, saltPassword)
     const roleType = req.body.role
     let signedUpUser;
-    const restaurant_data = "nothing"
     if(roleType === 'owner') {
         signedUpUser = new signupTemplete({
             fullName: req.body.fullName,
@@ -33,13 +33,19 @@ router.post("/signup", async (req, res) => {
             password: securePassword,
         })
     }
-    // console.log(signedUpUser)
+    
     const token = await signedUpUser.generateAuthToken()
+    // res.cookie("jwt", token, {
+    //     expires: new Date(Date.now() + 30000),
+    //     httpOnly: true 
+    // })
+    // console.log(cookie)
     signedUpUser.save()
     .then(data => {
-        res.json(data)
+        res.status(200).json(data)
     }).catch(error => {
-        res.json(error)
+        console.log(error)
+        // res.status(422).send(error)
     })
 })
 
@@ -47,32 +53,57 @@ router.post("/signup", async (req, res) => {
 router.patch("/signup/:id", async (req, res) => {
     try {
         const _id = req.params.id
-        const updateRestaurant = await signupTemplete.findByIdAndUpdate(_id, req.body, {new: true})
-        console.log("line 50", updateRestaurant)
-        res.send(updateRestaurant)
+        const updateData = await signupTemplete.findByIdAndUpdate(_id, req.body, {new: true})
+        console.log("line 50", updateData)
+        res.send(updateData)
     } catch(e) {
         res.status(404).send(e)
+    }
+})
+
+// router.get("/signup", async (req, res) => {
+//     try {
+//         const getAllData = await signupTemplete.find({})
+//         res.status(201).send(getAllData)
+//     } catch(e) {
+//         res.status(400).send(e)
+//     }
+// })
+
+router.get("/signup/:id", async (req, res) => {
+    try {
+        const _id = req.params.id
+        const getUserData = await signupTemplete.findOne({_id})
+        res.json(getUserData)
+    } catch(e) {
+        console.log(e)
     }
 })
 
 // login validation
 router.post("/login", async (req, res) => {
     try {
+        console.log("in login")
         const email = req.body.email
         const password = req.body.password
-        const userEmail = await signupTemplete.findOne({email})
-
-        const isMatch = bcrypt.compare(password, userEmail.password)
-
-        const token = await userEmail.generateAuthToken()
-        console.log(token)
+        const getUser = await signupTemplete.findOne({email})
+        console.log("line 71 " + getUser)
+        const isMatch = bcrypt.compare(password, getUser.password)
+        console.log("line 74 " + isMatch)
+        const token = await getUser.generateAuthToken()
+        console.log("line 76 " + token)
+        // res.cookie("jwt", token, {
+        //     expires: new Date(Date.now() + 3000000000000),
+        //     httpOnly: true
+        // })
+        // console.log("line 81 " + cookie)
 
         if(isMatch) {
-            if(userEmail.role === 'owner') {
+            if(getUser.role === 'owner') {
                 console.log("login successfull")
-                res.status(201).send("owner login successfull")
+                res.status(201).json(getUser)
             } else {
-                res.status(201).send("customer login successfull")
+                res.status(201).json(getUser)
             }
         } else {
             console.log("not matching")
@@ -82,6 +113,7 @@ router.post("/login", async (req, res) => {
         res.status(400)
     }
 })
+
 
 router.post("/dish", (req, res) => {
     const dishDetail = new dishTemplete({

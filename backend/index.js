@@ -1,11 +1,13 @@
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 const app = express()
 const routesUrl = require('./Routes/router')
 const cors = require('cors')
 const port = process.env.PORT || 4000
 
-mongoose.connect("mongodb://localhost:27017/Food_Corner", {
+mongoose.connect(process.env.DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -18,5 +20,6 @@ mongoose.connect("mongodb://localhost:27017/Food_Corner", {
 app.use(express.json())
 app.use(cors())
 app.use('/app', routesUrl)
+app.use(cookieParser())
 
-app.listen(port, () => console.log("server is up and running"))
+app.listen(port, () => console.log("server is up and running at port" + port))
