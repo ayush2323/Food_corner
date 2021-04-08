@@ -64,3 +64,11 @@ link {
   align-items: center;
   width: 50%;
 }
+
+.aboutRestaurant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}

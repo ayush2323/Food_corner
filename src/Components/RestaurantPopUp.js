@@ -1,60 +1,30 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import React, { useState } from 'react'
+import { Modal, Button } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form'
+import FormCol from './SubComponent/FormCol'
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-export default function RestaurantPopUp() {
-    console.log("in restaurant popup")
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+function RestaurantPopUp(props) {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        react-transition-group
-      </button>
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
-          </div>
-        </Fade>
+        <Modal.Body>
+          <Form onSubmit={props.submitRestaurantDetail}>
+            <FormCol name={"Restaurant Name"} sendName={"restaurantName"} value={props.restaurantDetail.restaurantName} controlId={'restaurantName'} type={"text"} placeholder={"Enter restaurant name"} changeHandler={props.detailHandler} />
+            <FormCol name={"Restaurant Discription"} sendName={"restaurantDiscription"} value={props.restaurantDetail.restaurantDiscription} controlId={'restaurantDiscription'} type={"text"} placeholder={"Enter restaurant discription"} changeHandler={props.detailHandler} />
+            <FormCol name={"Restaurant Address"} sendName={"restaurantAddress"} value={props.restaurantDetail.restaurantAddress} controlId={'restaurantAddress'} type={"text"} placeholder={"Enter restaurant address"} changeHandler={props.detailHandler} />
+            <FormCol name={"Restaurant Phone"} sendName={"restaurantPhone"} value={props.restaurantDetail.restaurantPhon} controlId={'restaurantPhone'} type={"number"} placeholder={"Enter restaurant phone"} changeHandler={props.detailHandler} />
+            <Button variant="primary" type="submit">Submit</Button>
+          </Form>
+        </Modal.Body>
       </Modal>
     </div>
-  );
+  )
 }
+
+export default RestaurantPopUp

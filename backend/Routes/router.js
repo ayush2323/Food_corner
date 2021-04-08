@@ -1,8 +1,8 @@
+
 require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const signupTemplete = require("../Models/signupModel")
-const dishTemplete = require("../Models/dishModel")
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 const cookieParser = require('cookie-parser')
@@ -40,6 +40,7 @@ router.post("/signup", async (req, res) => {
     //     httpOnly: true 
     // })
     // console.log(cookie)
+    console.log(signedUpUser)
     signedUpUser.save()
     .then(data => {
         res.status(200).json(data)
@@ -53,7 +54,10 @@ router.post("/signup", async (req, res) => {
 router.patch("/signup/:id", async (req, res) => {
     try {
         const _id = req.params.id
+        console.log("line 56 " + _id)
+        console.log("line 57 " + req.body)
         const updateData = await signupTemplete.findByIdAndUpdate(_id, req.body, {new: true})
+        console.log("line 59 " + updateData)
         console.log("line 50", updateData)
         res.send(updateData)
     } catch(e) {
@@ -115,22 +119,22 @@ router.post("/login", async (req, res) => {
 })
 
 
-router.post("/dish", (req, res) => {
-    const dishDetail = new dishTemplete({
-        ItemName: req.body.ItemName,
-        ItemImage: req.body.ItemImage,
-        ItemDiscription: req.body.ItemDiscription,
-        ItemCatagory: req.body.ItemCatagory,
-        ItemType: req.body.ItemType,
-        Constituents: req.body.Constituents,
-        price: req.body.price
-    })
-    dishDetail.save()
-    .then(data => {
-        res.json(data)
-    }).catch(error => {
-        res.json(error)
-    })
-})
+// router.post("/dish", (req, res) => {
+//     const dishDetail = new dishTemplete({
+//         ItemName: req.body.ItemName,
+//         ItemImage: req.body.ItemImage,
+//         ItemDiscription: req.body.ItemDiscription,
+//         ItemCatagory: req.body.ItemCatagory,
+//         ItemType: req.body.ItemType,
+//         Constituents: req.body.Constituents,
+//         price: req.body.price
+//     })
+//     dishDetail.save()
+//     .then(data => {
+//         res.json(data)
+//     }).catch(error => {
+//         res.json(error)
+//     })
+// })
 
 module.exports = router

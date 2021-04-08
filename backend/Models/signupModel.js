@@ -64,7 +64,35 @@ const signupTemplete = new mongoose.Schema({
         restaurantPhone: {
             type: Number,
             required: true,
-        }
+        },
+        restaurantMenu: [{
+            ItemName: {
+                type: String,
+                required: true,
+                unique: true
+            }, 
+            ItemImage: {
+                type: {data: Buffer, contentType: String}
+            },
+            ItemDiscription: {
+                type: String
+            }, 
+            ItemCatagory: {
+                type: String,
+                default: "other"
+            },
+            ItemType: {
+                type: String,
+                default: "veg"
+            },
+            Constituents: {
+                type: String
+            },
+            price: {
+                type: Number,
+                require: true
+            }
+        }]
     }],
     tokens: [{
         token: {

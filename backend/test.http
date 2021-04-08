@@ -10,18 +10,21 @@
 #     "password": "Password12#"
 # }
 
-PATCH http://localhost:4000/app/signup/606bcb6e0a7e002a30d67440
-Content-Type: : application/json
+GET http://localhost:4000/app/signup/606d8fa40270d1138cf4f7aa
+Content-Type: application/json
 
-{
-    "restaurant": [
-        {
-            "restaurantName": "food best",
-            "restaurantDiscription": "5 star",
-            "restaurantAddress": "delhi",
-            "restaurantOwner": "abc",
-            "restaurantPhone": 9998887773
-        }
-    ],  
-    "email": "abc12345@gmail.com"
-}
+# PATCH http://localhost:4000/app/signup/606bcb6e0a7e002a30d67440
+# Content-Type: : application/json
+
+# {
+#     "restaurant": [
+#         {
+#             "restaurantName": "food best",
+#             "restaurantDiscription": "5 star",
+#             "restaurantAddress": "delhi",
+#             "restaurantOwner": "abc",
+#             "restaurantPhone": 9998887773
+#         }
+#     ],  
+#     "email": "abc12345@gmail.com"
+# }

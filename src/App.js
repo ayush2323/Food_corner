@@ -22,7 +22,7 @@ function App() {
                 <Route exact path='/owner_dashboard/:id'><OwnerDashboard /></Route>
                 <Route exact path='*'><Error /></Route>
             </Switch>
-            <Footer />
+            {/* <Footer /> */}
         </Router>
     </>
   );
