@@ -22,6 +22,8 @@ const OwnerDashboard = (props) => {
 
     const submitRestaurantDetail = (e) => {
         e.preventDefault()
+        // let ItemName, ItemImage, ItemDiscription, ItemCatagory, ItemType, Constituents, price
+        // restaurantDetail.restaurantMenu= [ItemName= "", ItemImage= "", ItemDiscription= "", ItemCatagory= "", ItemType= "", Constituents= "", price= ""]
         const addedRestaurant = { "restaurant": [restaurantDetail] }
         console.log(addedRestaurant)
 
@@ -43,7 +45,7 @@ const OwnerDashboard = (props) => {
     const showRestaurantDetail = () => {
         if(!modalShow) {
             return (
-                <RestaurantDetailComponent restaurantDetail={restaurantDetail} />
+                <RestaurantDetailComponent id={id} restaurantDetail={restaurantDetail} />
             )
         } else return ""
     }

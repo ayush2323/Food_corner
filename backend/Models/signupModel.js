@@ -12,7 +12,7 @@ const signupTemplete = new mongoose.Schema({
     email: {
         type: String,
         require: true,
-        unique: true,
+        // unique: true,
         validate(value){
             if(!validator.isEmail(value)){
                 throw new Error("Email is invalid")
@@ -22,7 +22,7 @@ const signupTemplete = new mongoose.Schema({
     phone: {
         type: Number,
         require: true,
-        unique: true,
+        // unique: true,
         maxlength: 10,
         minlenth: 10
     },
@@ -68,11 +68,12 @@ const signupTemplete = new mongoose.Schema({
         restaurantMenu: [{
             ItemName: {
                 type: String,
-                required: true,
-                unique: true
+                // required: true
             }, 
             ItemImage: {
-                type: {data: Buffer, contentType: String}
+                // data: Buffer, 
+                // contentType: String
+                type: String
             },
             ItemDiscription: {
                 type: String
@@ -118,3 +119,66 @@ signupTemplete.methods.generateAuthToken = async function() {
 }
 
 module.exports = mongoose.model('user_signup', signupTemplete)
+
+
+
+/*
+_id
+:
+606ef44fdd8e8a3340678514
+fullName
+:
+"Ayush Tiwari"
+email
+:
+"ayush@gmail.com"
+phone
+:
+9897979798
+role
+:
+"owner"
+address
+:
+"1"
+password
+:
+"$2b$10$McQ5yAb4GrZOK7M6klxnrutlkeRaOxro4ugCTna6luU0M4Wt/BM6a"
+restaurant
+:
+0
+:
+_id
+:
+606ef461dd8e8a3340678516
+restaurantName
+:
+"delhi darbaad"
+restaurantDiscription
+:
+"5 star"
+restaurantAddress
+:
+"delhi"
+restaurantPhone
+:
+9580048004
+restaurantMenu
+:
+tokens
+:
+0
+:
+_id
+:
+606ef44fdd8e8a3340678515
+token
+:
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZlZjQ0ZmRkOGU4YTMzN..."
+date
+:
+2021-04-08T12:17:19.388+00:00
+__v
+:
+0
+*/

@@ -56,3 +56,8 @@
 .nav-links link:hover {
   color: var(--primaryColor);
 }
+
+.vl {
+  border-left: 6px solid green;
+  height: 500px;
+}

@@ -9,21 +9,11 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 function SignupPopUp(props) {
-    const [user, setUser] = useState({
-        fullName: "demo", email: "demo@gmail.com", phone: "9897979798", address: "1", password: "Password12#", role: ""
-    })
     const [login_user, setLoginUser] = useState({
         email: "", password: ""
     })
-    const [login, showLogin] = useState(false)
+    const [showLoginForm, setShowLoginForm] = useState(false)
     const history = useHistory()
-
-    let signin_name, signin_value
-    const inputHandler = (e) => {
-        signin_name = e.target.name
-        signin_value = e.target.value
-        setUser({ ...user, [signin_name]: signin_value })
-    }
 
     let login_name, login_value
     const loginHandler = (e) => {
@@ -32,35 +22,8 @@ function SignupPopUp(props) {
         setLoginUser({...login_user, [login_name]: login_value })
     }
 
-    const showSignUpPage = () => (showLogin(false))
-    const showLoginPage = () => (showLogin(true))
-
-    const submitSignup = async (e) => {
-        e.preventDefault()
-        const { fullName, email, phone, address, password, role } = user
-        axios.post('http://localhost:4000/app/signup', {fullName, email, phone, address, password, role})
-            .then(res => {
-                    toast.success("Login Successfull", {
-                        position: "top-right"
-                    })
-                    if(res.data.role === "owner") {
-                        // setUser_id(res.data._id)
-                        // console.log("yessss")
-                        // <OwnerDashboard id={res.data.id} />
-                    }
-                    history.push(`/owner_dashboard/${res.data._id}`)
-                    // else history.push(`/customer_dashboard/${res.data._id}`)
-                    props.onHide(true)
-                }
-            )
-            .catch(e => {
-                    console.log(e)
-                    // toast.error("Invalid registration", {
-                    //     position: "top-right"
-                    // })
-                }
-            )
-    }
+    const showSignUpPage = () => (setShowLoginForm(false))
+    const showLoginPage = () => (setShowLoginForm(true))
 
     const submiLogin = (e) => {
         e.preventDefault()
@@ -69,27 +32,27 @@ function SignupPopUp(props) {
             .then(res => {
                 console.log(res)
                 if(res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
-                // else history.push(`/customer_dashboard/${res.data._id}`)
+                else history.push(`/customer_dashboard/${res.data._id}`)
                 props.onHide(true)
             })
             .catch(e => console.error(e))
     }
 
     const showSignupOrLogin = () => {
-        if (!login) {
+        if (!showLoginForm) {
             return (
-                <Form onSubmit={submitSignup}>
-                    <FormCol name={"Full name"} sendName={"fullName"} value={user.name} controlId={'Name'} type={"text"} placeholder={"Enter name"} changeHandler={inputHandler} />
-                    <FormCol name={"Email"} sendName={"email"} value={user.email} controlId={'Email'} type={"email"} placeholder={"Enter email"} changeHandler={inputHandler} />
-                    <FormCol name={"Phone"} sendName={"phone"} value={user.phone} controlId={'Phone'} type={"number"} placeholder={"Enter phone"} changeHandler={inputHandler} />
+                <Form onSubmit={props.submitSignup}>
+                    <FormCol name={"Full name"} sendName={"fullName"} value={props.user.name} controlId={'Name'} type={"text"} placeholder={"Enter name"} changeHandler={props.inputHandler} />
+                    <FormCol name={"Email"} sendName={"email"} value={props.user.email} controlId={'Email'} type={"email"} placeholder={"Enter email"} changeHandler={props.inputHandler} />
+                    <FormCol name={"Phone"} sendName={"phone"} value={props.user.phone} controlId={'Phone'} type={"number"} placeholder={"Enter phone"} changeHandler={props.inputHandler} />
                     <div key={`default-radio`} className="mb-3">
                         <div className="adjust_radio">
-                            <Form.Check value="owner" onClick={inputHandler} type="radio" id={`default-radio`} name="role" label={`Owner`} />
-                            <Form.Check value="customer" onClick={inputHandler} type="radio" id={`radio`} name="role" label={`Customer`} />
+                            <Form.Check value="owner" onClick={props.inputHandler} type="radio" id={`default-radio`} name="role" label={`Owner`} />
+                            <Form.Check value="customer" onClick={props.inputHandler} type="radio" id={`radio`} name="role" label={`Customer`} />
                         </div>
                     </div>
-                    <FormCol name={"Address"} sendName={"address"} value={user.address} controlId={'Address'} type={"text"} placeholder={"Enter Address"} changeHandler={inputHandler} />
-                    <FormCol name={"Password"} sendName={"password"} value={user.password} controlId={'Password'} type={"password"} placeholder={"Enter Password"} changeHandler={inputHandler} />
+                    <FormCol name={"Address"} sendName={"address"} value={props.user.address} controlId={'Address'} type={"text"} placeholder={"Enter Address"} changeHandler={props.inputHandler} />
+                    <FormCol name={"Password"} sendName={"password"} value={props.user.password} controlId={'Password'} type={"password"} placeholder={"Enter Password"} changeHandler={props.inputHandler} />
                     <Button variant="primary" type="submit">Submit</Button>
                     {/* <Link to={`/cocktail/${id}`} className="btn btn-primary btn-details">Details</Link> */}
                 </Form>

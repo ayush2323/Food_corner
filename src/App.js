@@ -10,6 +10,8 @@ import About from './Pages/About';
 import Error from './Pages/Error';
 import Footer from './Components/Footer';
 import OwnerDashboard from './Pages/OwnerDashboard'
+import CustomerDashboard from './Pages/CustomerDashboard'
+import DishDetail from './Pages/DishDetail'
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
                 <Route exact path='/'><Home /></Route>
                 <Route exact path='/about'><About /></Route>
                 <Route exact path='/owner_dashboard/:id'><OwnerDashboard /></Route>
+                <Route exact path='/customer_dashboard/:id'><CustomerDashboard /></Route>
+                <Route exact path='/dish_detail/:id'>{DishDetail}</Route>
                 <Route exact path='*'><Error /></Route>
             </Switch>
             {/* <Footer /> */}

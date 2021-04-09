@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
 import { Button } from 'react-bootstrap'
 import MenuPopup from '../MenuPopup'
+import axios from 'axios'
 
-const RestaurantDetailComponent = ({restaurantDetail}) => {
+const RestaurantDetailComponent = (props) => {
+    const restaurantDetail = props.restaurantDetail
+    const id = props.id
     const [modalShow, setModalShow] = useState(false);
     const [menuItem, setMenuItem] = useState({
         ItemName: "", ItemImage: "", ItemDiscription: "", ItemCatagory: "", ItemType: "", Constituents: "", price: ""
@@ -19,21 +22,23 @@ const RestaurantDetailComponent = ({restaurantDetail}) => {
         e.preventDefault()
         console.log(menuItem)
         // const addedRestaurant = { "restaurant": [restaurantDetail] }
-        // console.log(addedRestaurant)
+        const restaurantMenu = { "restaurantMenu": [menuItem] }
+        // console.log(restaurantMenu)
 
-        // axios.patch(`http://localhost:4000/app/signup/${id}`, addedRestaurant)
-        //     .then(res => {
-        //         toast.success("Restaurant Added", {
-        //             position: "top-right"
-        //         })
-        //         setModalShow(false)
-        //     })
-        //     .catch(e => {
-        //         console.log(e)
-        //         // toast.error("Invalid registration", {
-        //         //     position: "top-right"
-        //         // })
-        //     })
+        axios.post(`http://localhost:4000/app/dish/${id}`, restaurantMenu)
+            .then(res => {
+                console.log(res.data)
+                // toast.success("Restaurant Added", {
+                //     position: "top-right"
+                // })
+                // setModalShow(false)
+            })
+            .catch(e => {
+                console.log(e)
+                // toast.error("Invalid registration", {
+                //     position: "top-right"
+                // })
+            })
     }
 
     return (
