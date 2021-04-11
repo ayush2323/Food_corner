@@ -3,17 +3,18 @@ const express = require('express')
 const router = express.Router()
 const signupTemplete = require("../Models/signupModel")
 const customerTemplete = require("../Models/customerModel")
+const dishTemplete = require("../Models/onlyDish")
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 const cookieParser = require('cookie-parser')
 const multer = require('multer')
 
-router.use(express.static(__dirname+"./public/"))
+router.use(express.static(__dirname + "./public/"))
 
 let Storage = multer.diskStorage({
     destination: "./public/uploads/",
     filename: (req, file, cb) => {
-        cb(null, file.fieldname+"_"+Date.now()+path.extname(file.originalname))
+        cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname))
     }
 })
 
@@ -23,7 +24,7 @@ let upload = multer({
 
 router.post('/profile', (req, res) => {
     upload(req, res, (err) => {
-        if(err) return;
+        if (err) return;
     })
 })
 
@@ -33,7 +34,7 @@ router.post("/signup", async (req, res) => {
     const securePassword = await bcrypt.hash(req.body.password, saltPassword)
     const roleType = req.body.role
     let signedUpUser;
-    if(roleType === 'owner') {
+    if (roleType === 'owner') {
         signedUpUser = new signupTemplete({
             fullName: req.body.fullName,
             email: req.body.email,
@@ -53,7 +54,7 @@ router.post("/signup", async (req, res) => {
             password: securePassword,
         })
     }
-    
+
     const token = await signedUpUser.generateAuthToken()
     // res.cookie("jwt", token, {
     //     expires: new Date(Date.now() + 30000),
@@ -62,12 +63,12 @@ router.post("/signup", async (req, res) => {
     // console.log(cookie)
     console.log(signedUpUser)
     signedUpUser.save()
-    .then(data => {
-        res.status(200).json(data)
-    }).catch(error => {
-        console.log(error)
-        // res.status(422).send(error)
-    })
+        .then(data => {
+            res.status(200).json(data)
+        }).catch(error => {
+            console.log(error)
+            // res.status(422).send(error)
+        })
 })
 
 // update profile
@@ -76,11 +77,11 @@ router.patch("/signup/:id", async (req, res) => {
         const _id = req.params.id
         console.log("line 56 " + _id)
         console.log("line 57 " + req.body)
-        const updateData = await signupTemplete.findByIdAndUpdate(_id, req.body, {new: true})
+        const updateData = await signupTemplete.findByIdAndUpdate(_id, req.body, { new: true })
         console.log("line 59 " + updateData)
         console.log("line 50", updateData)
         res.send(updateData)
-    } catch(e) {
+    } catch (e) {
         res.status(404).send(e)
     }
 })
@@ -89,7 +90,7 @@ router.get("/signup", async (req, res) => {
     try {
         const getAllData = await signupTemplete.find({})
         res.status(201).send(getAllData)
-    } catch(e) {
+    } catch (e) {
         res.status(400).send(e)
     }
 })
@@ -97,9 +98,9 @@ router.get("/signup", async (req, res) => {
 router.get("/signup/:id", async (req, res) => {
     try {
         const _id = req.params.id
-        const getUserData = await signupTemplete.findOne({_id})
+        const getUserData = await signupTemplete.findOne({ _id })
         res.json(getUserData)
-    } catch(e) {
+    } catch (e) {
         console.log(e)
     }
 })
@@ -110,7 +111,7 @@ router.post("/login", async (req, res) => {
         console.log("in login")
         const email = req.body.email
         const password = req.body.password
-        const getUser = await signupTemplete.findOne({email})
+        const getUser = await signupTemplete.findOne({ email })
         console.log("line 71 " + getUser)
         const isMatch = bcrypt.compare(password, getUser.password)
         console.log("line 74 " + isMatch)
@@ -122,8 +123,8 @@ router.post("/login", async (req, res) => {
         // })
         // console.log("line 81 " + cookie)
 
-        if(isMatch) {
-            if(getUser.role === 'owner') {
+        if (isMatch) {
+            if (getUser.role === 'owner') {
                 console.log("login successfull")
                 res.status(201).json(getUser)
             } else {
@@ -133,7 +134,7 @@ router.post("/login", async (req, res) => {
             console.log("not matching")
             res.status(201).send("Incorrect email or password")
         }
-    } catch(e) {
+    } catch (e) {
         res.status(400)
     }
 })
@@ -141,7 +142,8 @@ router.post("/login", async (req, res) => {
 router.patch("/dish/:id", upload, async (req, res) => {
     try {
         const _id = req.params.id
-        console.log(upload)
+        // console.log(upload)
+        // console.log(req.body)
         // const updateData = await signupTemplete.findByIdAndUpdate(_id, req.body, {new: true})
         // res.send(updateData)
         // const getUserData = await signupTemplete.findOne({_id})
@@ -157,9 +159,39 @@ router.patch("/dish/:id", upload, async (req, res) => {
         //     console.log(error)
         //     // res.status(422).send(error)
         // })
-    } catch(e) {
+    } catch (e) {
         res.status(400)
     }
+})
+
+router.post("/dishes", async (req, res) => {
+    try {
+        dishDetails = new dishTemplete({
+            ItemName: req.body.ItemName,
+            ItemDiscription: req.body.ItemDiscription,
+            ItemCatagory: req.body.ItemCatagory,
+            ItemType: req.body.ItemType,
+            Constituents: req.body.Constituents,
+            price: req.body.price
+        })
+        dishDetails.save()
+            .then(data => {
+                res.status(200).json(data)
+            }).catch(error => {
+                console.log(error)
+                // res.status(422).send(error)
+            })
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.get("/dishes", async(req, res) => {
+    try {
+        const getDishes = await dishTemplete.find()
+        console.log(getDishes)
+        res.json(getDishes)
+    } catch(e)  {console.log(e)}
 })
 
 // router.post("/dish", (req, res) => {

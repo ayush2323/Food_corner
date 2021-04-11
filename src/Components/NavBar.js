@@ -30,8 +30,6 @@ const NavBar = () => {
         const { fullName, email, phone, address, password, role } = user
         axios.post('http://localhost:4000/app/signup', {fullName, email, phone, address, password, role})
             .then(res => {
-                console.log(res.data)
-                console.log(res.data.role)
                     toast.success("Login Successfull", {
                         position: "top-right"
                     })

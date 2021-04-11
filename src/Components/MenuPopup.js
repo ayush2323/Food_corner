@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import FormCol from './SubComponent/FormCol'
 
 const MenuPopup = (props) => {
-  const { menuItem, ItemHandler, addItem } = props
+  const { menuItem, ItemHandler, addDishes } = props
   return (
     <div>
       <Modal
@@ -15,7 +15,7 @@ const MenuPopup = (props) => {
       >
         <Modal.Header closeButton><center><h6>Write detail of Item</h6></center></Modal.Header>
         <Modal.Body>
-          <Form onSubmit={addItem} encType="multipart/form-data">
+          <Form onSubmit={addDishes} encType="multipart/form-data">
             <FormCol name={"Item Name"} sendName={"ItemName"} value={menuItem.ItemName} controlId={'ItemName'} type={"text"} placeholder={"Enter item name"} changeHandler={ItemHandler} />
             <Form.Group>
               <Form.File name="ItemImage" id="exampleFormControlFile1" label="Upload Item Image" />

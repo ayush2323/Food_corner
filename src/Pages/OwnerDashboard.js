@@ -5,13 +5,24 @@ import RestaurantPopUp from '../Components/RestaurantPopUp'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import RestaurantDetailComponent from '../Components/SubComponent/RestaurantDetailComponent'
+import Loading from '../Components/Loading'
 
 const OwnerDashboard = (props) => {
-    const [modalShow, setModalShow] = useState(false);
+    const [modalShow, setModalShow] = useState(true);
+    const [load, setLoad] = useState(false);
+    const [rest, setRest] = useState([])
     const { id } = useParams()
     const [restaurantDetail, setRestaurant] = useState({
         restaurantName: "", restaurantDiscription: "", restaurantAddress: "", restaurantPhone: "", restaurantMenu: []
     })
+    const [showDetails, setShowDetails] = useState(false)
+    console.log(load)
+    // console.log(modalShow)
+
+
+    useEffect(() => {
+        fetchRestaurantDetails()
+    }, [setModalShow])
 
     let restaurant_name, restaurant_value
     const detailHandler = (e) => {
@@ -20,8 +31,23 @@ const OwnerDashboard = (props) => {
         setRestaurant({ ...restaurantDetail, [restaurant_name]: restaurant_value })
     }
 
+    const fetchRestaurantDetails = () => {
+        axios.get(`http://localhost:4000/app/signup/${id}`)
+            .then(res => {
+                setLoad(false)
+                console.log(res.data.restaurant)
+                setRest(res.data.restaurant)
+                setShowDetails(true)
+            }).catch(e => console.log(e))
+            .finally(setLoad(false))
+        }
+
+    if(load) return <Loading />
+
+
     const submitRestaurantDetail = (e) => {
         e.preventDefault()
+        setLoad(true)
         // let ItemName, ItemImage, ItemDiscription, ItemCatagory, ItemType, Constituents, price
         // restaurantDetail.restaurantMenu= [ItemName= "", ItemImage= "", ItemDiscription= "", ItemCatagory= "", ItemType= "", Constituents= "", price= ""]
         const addedRestaurant = { "restaurant": [restaurantDetail] }
@@ -43,21 +69,14 @@ const OwnerDashboard = (props) => {
     }
 
     const showRestaurantDetail = () => {
-        if(!modalShow) {
-            return (
-                <RestaurantDetailComponent id={id} restaurantDetail={restaurantDetail} />
-            )
+        if(showDetails) {
+            if(rest.length > 0) {
+                return (
+                    <RestaurantDetailComponent id={id} restaurantDetail={rest} />
+                )
+            } else return ""
         } else return ""
     }
-
-    useEffect(() => {
-        axios.get(`http://localhost:4000/app/signup/${id}`)
-            .then(res => {
-                if (res.data.restaurant.length === 0) {
-                    setModalShow(true)
-                }
-            }).catch(e => console.log(e))
-    }, [])
 
     return (
         <div>

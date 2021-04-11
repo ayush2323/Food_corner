@@ -1,15 +1,18 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Button } from 'react-bootstrap'
 import MenuPopup from '../MenuPopup'
+import DishesList from './DishesList'
 import axios from 'axios'
 
 const RestaurantDetailComponent = (props) => {
     const restaurantDetail = props.restaurantDetail
+    console.log(restaurantDetail[0])
     const id = props.id
     const [modalShow, setModalShow] = useState(false);
     const [menuItem, setMenuItem] = useState({
-        ItemName: "", ItemImage: "", ItemDiscription: "", ItemCatagory: "", ItemType: "", Constituents: "", price: ""
+        ItemName: "", ItemDiscription: "", ItemCatagory: "", ItemType: "", Constituents: "", price: ""
     })
+    const [dishList, setDishList] = useState([])
 
     let item_name, item_value
     const ItemHandler = (e) => {
@@ -20,12 +23,11 @@ const RestaurantDetailComponent = (props) => {
 
     const addItem = (e) => {
         e.preventDefault()
-        console.log(menuItem)
         // const addedRestaurant = { "restaurant": [restaurantDetail] }
         const restaurantMenu = { "restaurantMenu": [menuItem] }
         // console.log(restaurantMenu)
 
-        axios.post(`http://localhost:4000/app/dish/${id}`, restaurantMenu)
+        axios.patch(`http://localhost:4000/app/dish/${id}`, restaurantMenu)
             .then(res => {
                 console.log(res.data)
                 // toast.success("Restaurant Added", {
@@ -41,15 +43,50 @@ const RestaurantDetailComponent = (props) => {
             })
     }
 
+    const addDishes = (e) => {
+        e.preventDefault()
+        axios.post(`http:///localhost:4000/app/dishes`, menuItem)
+        .then(res => {
+            // console.log(res.data)
+            showDishes()
+        })
+        .catch(e => console.log(e))
+    }
+
+    const showDishes = () => {
+        axios.get(`http://localhost:4000/app/dishes`)
+        .then(res => {
+            setDishList(res.data)
+        }).catch(e => console.log(e))
+    }
+
+    const showDishesList = () => {
+        // console.log(dishList.length)
+        if(dishList.length != 0) {
+            return (
+                dishList.map((item, index) => {
+                    return <DishesList key={index} item={item} />
+                })
+            )
+        } else return ""
+    }
+    // showDishes()
+
+    // useEffect(() => {
+    //     showDishes()
+    // }, [addDishes])
+
     return (
         <div>
             <div className="aboutRestaurant">
-                <h1>{restaurantDetail.restaurantName}</h1>
-                <h2>{restaurantDetail.restaurantDiscription}</h2>
-                <p>Address: {restaurantDetail.restaurantAddress}</p>
-                <p>Phone: {restaurantDetail.restaurantPhone}</p>
+                {console.log(restaurantDetail)}
+                <h1>{restaurantDetail[0] .restaurantName}</h1>
+                <h2>{restaurantDetail[0].restaurantDiscription}</h2>
+                <p>Address: {restaurantDetail[0].restaurantAddress}</p>
+                <p>Phone: {restaurantDetail[0].restaurantPhone}</p>
                 <Button variant="success" onClick={() => setModalShow(true)}>Add Item to Restaurant</Button>
-                <MenuPopup menuItem={menuItem} ItemHandler={ItemHandler} addItem={addItem} show={modalShow} onHide={() => setModalShow(false)} />
+                <MenuPopup menuItem={menuItem} ItemHandler={ItemHandler} addDishes={addDishes} show={modalShow} onHide={() => setModalShow(false)} />
+                {showDishesList()}
             </div>
         </div>
     )

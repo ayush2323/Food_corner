@@ -1,31 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import Item from './SubComponent/Item'
+import Loading from './Loading'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import axios from 'axios'
+import { useCostumHooks } from '../context'
 
-const ItemsList = () => {
-    const [dishes, setDishes] = useState([])
-
-    const getItems = async (e) => {
-        // e.preventDefault()
-        // axios.get(`http://localhost:4000/app/dish/`)
-        //     .then(res => {
-        //         console.log(res.data)
-        //     })
-        //     .catch(e => {
-        //         console.log(e)
-        //         // toast.error("Invalid registration", {
-        //         //     position: "top-right"
-        //         // })
-        //     }
-        //     )
+const ItemsList = (props) => {
+    const {dishes, load} = useCostumHooks()
+    console.log(dishes)
+    if(load){
+        return <Loading />
     }
 
-    useEffect(() => {
-        getItems()
-    }, [])
+    // if(dishes.length < 1){
+    //     return (
+    //         <h2 className="section-title">
+    //             No Cocktails matched your search criteria
+    //         </h2>
+    //     )
+    // }
+    // if(load){
+    //     return <Loading />
+    // }
 
     if (dishes.length < 1) {
         return (
@@ -56,7 +54,6 @@ const ItemsList = () => {
                     <Col></Col>
                 </Row>
             </Container>
-            <ItemsList />
         </div>
     )
 }
