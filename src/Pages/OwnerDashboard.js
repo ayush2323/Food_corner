@@ -16,13 +16,11 @@ const OwnerDashboard = (props) => {
         restaurantName: "", restaurantDiscription: "", restaurantAddress: "", restaurantPhone: "", restaurantMenu: []
     })
     const [showDetails, setShowDetails] = useState(false)
-    console.log(load)
-    // console.log(modalShow)
-
 
     useEffect(() => {
+        console.log("use effect")
         fetchRestaurantDetails()
-    }, [setModalShow])
+    }, [modalShow])
 
     let restaurant_name, restaurant_value
     const detailHandler = (e) => {
@@ -35,7 +33,6 @@ const OwnerDashboard = (props) => {
         axios.get(`http://localhost:4000/app/signup/${id}`)
             .then(res => {
                 setLoad(false)
-                console.log(res.data.restaurant)
                 setRest(res.data.restaurant)
                 setShowDetails(true)
             }).catch(e => console.log(e))

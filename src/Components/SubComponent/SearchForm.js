@@ -9,23 +9,25 @@ const SearchForm = (props) => {
         searchValue.current.focus()
       }, [])
     
-      function searchDish() {
-        setSearchTerm(searchValue.current.value)
-      }
-      function handleSubmit(e) {
-        e.preventDefault()
-      }
+    //   function searchDish() {
+    //       console.log("search")
+    //     setSearchTerm(searchValue.current.value)
+    //   }
+    //   function handleSubmit(e) {
+    //     e.preventDefault()
+    //   }
     return (
         <section className='section search'>
-            <form className='search-form' onSubmit={handleSubmit}>
+            <form className='search-form' onSubmit={props.handleSubmit}>
                 <div className='form-control'>
                     <label htmlFor='name'>search your favorite dish</label>
                     <input
                         type='text'
                         name='name'
                         id='name'
+                        value={props.searchTerm}
                         ref={searchValue}
-                        onChange={searchDish}
+                        onChange={props.searchDish}
                     />
                 </div>
             </form>

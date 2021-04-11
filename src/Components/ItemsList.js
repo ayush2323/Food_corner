@@ -9,23 +9,11 @@ import { useCostumHooks } from '../context'
 
 const ItemsList = (props) => {
     const {dishes, load} = useCostumHooks()
-    console.log(dishes)
     if(load){
         return <Loading />
     }
 
-    // if(dishes.length < 1){
-    //     return (
-    //         <h2 className="section-title">
-    //             No Cocktails matched your search criteria
-    //         </h2>
-    //     )
-    // }
-    // if(load){
-    //     return <Loading />
-    // }
-
-    if (dishes.length < 1) {
+    if (props.dishes.length < 1) {
         return (
             <h2 className="section-title">
                 No dishes matched your search criteria
@@ -42,7 +30,7 @@ const ItemsList = (props) => {
                         <section className="section">
                             <h2 className="section-title">Our Menu</h2>
                             <div className="cocktails-center">
-                                {dishes.map((item, index) => (
+                                {props.dishes.map((item, index) => (
                                     <Item key={index} dish={item} />
                                 ))}
                             </div>

@@ -6,7 +6,6 @@ import axios from 'axios'
 
 const RestaurantDetailComponent = (props) => {
     const restaurantDetail = props.restaurantDetail
-    console.log(restaurantDetail[0])
     const id = props.id
     const [modalShow, setModalShow] = useState(false);
     const [menuItem, setMenuItem] = useState({
@@ -23,9 +22,7 @@ const RestaurantDetailComponent = (props) => {
 
     const addItem = (e) => {
         e.preventDefault()
-        // const addedRestaurant = { "restaurant": [restaurantDetail] }
         const restaurantMenu = { "restaurantMenu": [menuItem] }
-        // console.log(restaurantMenu)
 
         axios.patch(`http://localhost:4000/app/dish/${id}`, restaurantMenu)
             .then(res => {

@@ -14,27 +14,39 @@ const CustomerDashboard = (props) => {
     const [load, setLoad] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
 
-    // const handleSubmit = () => {
-    //     console.log("handleSubmit")
-    // }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
 
-    // const searchCocktail = (e) => {
-    //     console.log("searchCocktail")
-    // }
+    const searchDish = (e) => {
+        console.log(e.target.value)
+        setSearchTerm(e.target.value)
+    }
     
     const showDishes = () => {
         setLoad(true)
         axios.get(`http://localhost:4000/app/dishes`)
         .then(res => {
-            console.log(res.data)
             setDishes(res.data)
         }).catch(e => console.log(e))
         .finally(setLoad(false))
     }
 
+    // if(dishes.length == 0) return <Loading />
+
     useEffect(() => {
         showDishes()
     }, [])
+
+    const filterDish = () => {
+        let newDish = dishes.filter(item => item.ItemName.includes(searchTerm))
+        setDishes(newDish)
+    }
+
+    useEffect(() => {
+        console.log("use effect")
+        filterDish()
+    }, [searchTerm])
 
     // if(load) return <Loading />
 
@@ -43,12 +55,12 @@ const CustomerDashboard = (props) => {
             <Container>
             <Row>
                     <Col></Col>
-                    {/* <Col xs={10} className="menu_title"><SearchForm handleSubmit={handleSubmit} searchCocktail={searchCocktail} /></Col> */}
+                    <Col xs={10} className="menu_title"><SearchForm handleSubmit={handleSubmit} searchTerm={searchTerm} searchDish={searchDish} /></Col>
                     <Col></Col>
                 </Row>
                 <Row>
                     <Col></Col>
-                    <Col xs={10} className="menu_title" load={load} dishes={dishes}><ItemsList/></Col>
+                    <Col xs={10} className="menu_title"><ItemsList  load={load} dishes={dishes}/></Col>
                     <Col></Col>
                 </Row>
             </Container>

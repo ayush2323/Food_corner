@@ -70,14 +70,12 @@ const AppProvider = ({children}) => {
         const { fullName, email, phone, address, password, role } = user
         axios.post('http://localhost:4000/app/signup', { fullName, email, phone, address, password, role })
             .then(res => {
-                console.log(res.data)
                 toast.success("Login Successfull", {
                     position: "top-right"
                 })
                 setLogin(true)
                 user_name = res.data.fullName
                 user_id = res.data._id
-                console.log(user_id)
                 onHide()
                 const path = `/owner_dashboard/${res.data._id}`
                 // <Link to='path' />
