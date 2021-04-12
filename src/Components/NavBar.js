@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import "../CSS/NavBar.css"
 import SignUpPopUp from './SignupPopUp'
@@ -16,6 +16,7 @@ const NavBar = () => {
     const [user, setUser] = useState({
         fullName: "demo", email: "demo@gmail.com", phone: "9897979798", address: "1", password: "Password12#", role: ""
     })
+    const [user_name, setUser_name] = useState('')
 
     let signin_name, signin_value
     const inputHandler = (e) => {
@@ -24,12 +25,14 @@ const NavBar = () => {
         setUser({ ...user, [signin_name]: signin_value })
     }
 
-    let user_name = '', user_id = ''
+    let user_id = ''
     const submitSignup = async (e) => {
         e.preventDefault()
         const { fullName, email, phone, address, password, role } = user
         axios.post('http://localhost:4000/app/signup', {fullName, email, phone, address, password, role})
             .then(res => {
+                console.log(res)
+                // user_name = res.data.fullName
                     toast.success("Login Successfull", {
                         position: "top-right"
                     })
@@ -39,9 +42,11 @@ const NavBar = () => {
                         // <OwnerDashboard id={res.data.id} />
                     }
                     showLogin(true)
-                    user_name = res.data.fullName
+                    setUser_name(res.data.fullName)
+                    // user_name = 
                     user_id = res.data._id
                     onHide()
+                    showNavbar()
                     if(res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
                     else history.push(`/customer_dashboard/${res.data._id}`)
                 }
@@ -55,19 +60,35 @@ const NavBar = () => {
             )
     }
 
+    const showNavbar = () => {
+        axios.get(`http://localhost:4000/app/signup/${user_id}`)
+        .then(res => {
+            console.log(res.data)
+            setUser_name(res.data.fullName)
+            // setDishes(res.data)
+        }).catch(e => console.log(e))
+        // .finally(setLoad(false))
+    }
+
+    // useEffect(() => {
+    //     // console.log("showNav")
+    //     // showNavbar()
+    // }, [login])
+
     const history = useHistory()
     if(user_id != '') history.push(`/owner_dashboard/${user_id}`)
     const onHide=() => setModalShow(false)
     const seeModalShow = () => {setModalShow(true)}
 
     const renderButton = () => {
-        if (!login) {
+        console.log(user_name)
+        if (user_name === "") {
             return (
                 <Button variant="secondary" onClick={seeModalShow}>
                     Sign up
                 </Button>
             )
-        } else return <h3>{user.fullName}</h3>
+        } else return <h3>{user_name}</h3>
     }
 
     return (

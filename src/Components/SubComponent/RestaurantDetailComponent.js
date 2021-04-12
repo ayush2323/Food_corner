@@ -3,6 +3,8 @@ import { Button } from 'react-bootstrap'
 import MenuPopup from '../MenuPopup'
 import DishesList from './DishesList'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const RestaurantDetailComponent = (props) => {
     const restaurantDetail = props.restaurantDetail
@@ -27,24 +29,28 @@ const RestaurantDetailComponent = (props) => {
         axios.patch(`http://localhost:4000/app/dish/${id}`, restaurantMenu)
             .then(res => {
                 console.log(res.data)
-                // toast.success("Restaurant Added", {
-                //     position: "top-right"
-                // })
-                // setModalShow(false)
+                toast.success("Restaurant Added", {
+                    position: "top-right"
+                })
+                setModalShow(false)
             })
             .catch(e => {
                 console.log(e)
-                // toast.error("Invalid registration", {
-                //     position: "top-right"
-                // })
+                toast.error("Invalid registration", {
+                    position: "top-right"
+                })
             })
     }
 
+    const onHide=() => setModalShow(false)
+    const seeModalShow = () => {setModalShow(true)}
+
     const addDishes = (e) => {
+        console.log(menuItem)
         e.preventDefault()
         axios.post(`http:///localhost:4000/app/dishes`, menuItem)
         .then(res => {
-            // console.log(res.data)
+            onHide()
             showDishes()
         })
         .catch(e => console.log(e))
@@ -58,7 +64,6 @@ const RestaurantDetailComponent = (props) => {
     }
 
     const showDishesList = () => {
-        // console.log(dishList.length)
         if(dishList.length != 0) {
             return (
                 dishList.map((item, index) => {
@@ -67,22 +72,16 @@ const RestaurantDetailComponent = (props) => {
             )
         } else return ""
     }
-    // showDishes()
-
-    // useEffect(() => {
-    //     showDishes()
-    // }, [addDishes])
 
     return (
         <div>
             <div className="aboutRestaurant">
-                {console.log(restaurantDetail)}
                 <h1>{restaurantDetail[0] .restaurantName}</h1>
                 <h2>{restaurantDetail[0].restaurantDiscription}</h2>
                 <p>Address: {restaurantDetail[0].restaurantAddress}</p>
                 <p>Phone: {restaurantDetail[0].restaurantPhone}</p>
                 <Button variant="success" onClick={() => setModalShow(true)}>Add Item to Restaurant</Button>
-                <MenuPopup menuItem={menuItem} ItemHandler={ItemHandler} addDishes={addDishes} show={modalShow} onHide={() => setModalShow(false)} />
+                <MenuPopup menuItem={menuItem} ItemHandler={ItemHandler} addDishes={addDishes} show={modalShow} onHide={onHide} />
                 {showDishesList()}
             </div>
         </div>

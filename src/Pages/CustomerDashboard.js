@@ -9,10 +9,10 @@ import Row from 'react-bootstrap/Row'
 import axios from 'axios'
 
 const CustomerDashboard = (props) => {
-    const { id } = useParams()
     const [dishes, setDishes] = useState([])
     const [load, setLoad] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
+    const [total_dish, setTotal_dish] = useState([])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -28,6 +28,7 @@ const CustomerDashboard = (props) => {
         axios.get(`http://localhost:4000/app/dishes`)
         .then(res => {
             setDishes(res.data)
+            setTotal_dish(res.data)
         }).catch(e => console.log(e))
         .finally(setLoad(false))
     }
@@ -39,7 +40,7 @@ const CustomerDashboard = (props) => {
     }, [])
 
     const filterDish = () => {
-        let newDish = dishes.filter(item => item.ItemName.includes(searchTerm))
+        let newDish = total_dish.filter(item => item.ItemName.includes(searchTerm))
         setDishes(newDish)
     }
 
