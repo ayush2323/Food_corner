@@ -76,7 +76,7 @@ const OwnerDashboard = (props) => {
     }
 
     return (
-        <div>
+        <div style={{backgroundColor: 'rgb(212, 196, 196)', height: '100%'}} data-backdrop="static" data-keyboard="false">
             {showRestaurantDetail()}
             <RestaurantPopUp
                 show={modalShow}
@@ -85,6 +85,8 @@ const OwnerDashboard = (props) => {
                 restaurantDetail={restaurantDetail}
                 detailHandler={detailHandler}
                 submitRestaurantDetail={submitRestaurantDetail}
+                data-backdrop="static"
+                data-keyboard="false"
             />
             <ToastContainer />
         </div>

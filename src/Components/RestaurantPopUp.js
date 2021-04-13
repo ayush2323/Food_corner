@@ -12,9 +12,11 @@ function RestaurantPopUp(props) {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        data-backdrop="static"
+        data-keyboard="false"
       >
-        <Modal.Body>
-          <Form onSubmit={props.submitRestaurantDetail}>
+        <Modal.Body data-backdrop="static" data-keyboard="false">
+          <Form onSubmit={props.submitRestaurantDetail} data-backdrop="static" data-keyboard="false">
             <FormCol name={"Restaurant Name"} sendName={"restaurantName"} value={props.restaurantDetail.restaurantName} controlId={'restaurantName'} type={"text"} placeholder={"Enter restaurant name"} changeHandler={props.detailHandler} />
             <FormCol name={"Restaurant Discription"} sendName={"restaurantDiscription"} value={props.restaurantDetail.restaurantDiscription} controlId={'restaurantDiscription'} type={"text"} placeholder={"Enter restaurant discription"} changeHandler={props.detailHandler} />
             <FormCol name={"Restaurant Address"} sendName={"restaurantAddress"} value={props.restaurantDetail.restaurantAddress} controlId={'restaurantAddress'} type={"text"} placeholder={"Enter restaurant address"} changeHandler={props.detailHandler} />

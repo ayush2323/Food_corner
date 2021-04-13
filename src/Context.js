@@ -65,8 +65,6 @@ const AppProvider = ({children}) => {
     let user_name = '', user_id = ''
     const submitSignup = async (e) => {
         e.preventDefault()
-        console.log("submit")
-        console.log(user)
         const { fullName, email, phone, address, password, role } = user
         axios.post('http://localhost:4000/app/signup', { fullName, email, phone, address, password, role })
             .then(res => {

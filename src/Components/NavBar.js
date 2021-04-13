@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import "../CSS/NavBar.css"
 import SignUpPopUp from './SignupPopUp'
@@ -9,14 +9,19 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Modal, Button } from 'react-bootstrap'
+import Overlay from 'react-bootstrap/Overlay'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 const NavBar = () => {
     const [modalShow, setModalShow] = useState(false);
     const [login, showLogin] = useState(false)
+    const [show, setShow] = useState(true);
+    const [first, setFirst] = useState(true)
+    const target = useRef(null);
     const [user, setUser] = useState({
-        fullName: "demo", email: "demo@gmail.com", phone: "9897979798", address: "1", password: "Password12#", role: ""
+        fullName: "", email: "", phone: "", address: "", password: "", role: ""
     })
-    const [user_name, setUser_name] = useState('')
+    const [user_name, setUser_name] = useState(window.sessionStorage.getItem("signup_name"))
 
     let signin_name, signin_value
     const inputHandler = (e) => {
@@ -29,74 +34,68 @@ const NavBar = () => {
     const submitSignup = async (e) => {
         e.preventDefault()
         const { fullName, email, phone, address, password, role } = user
-        axios.post('http://localhost:4000/app/signup', {fullName, email, phone, address, password, role})
+        axios.post('http://localhost:4000/app/signup', { fullName, email, phone, address, password, role })
             .then(res => {
                 console.log(res)
                 // user_name = res.data.fullName
-                    toast.success("Login Successfull", {
-                        position: "top-right"
-                    })
-                    if(res.data.role === "owner") {
-                        // setUser_id(res.data._id)
-                        // console.log("yessss")
-                        // <OwnerDashboard id={res.data.id} />
-                    }
-                    showLogin(true)
-                    setUser_name(res.data.fullName)
-                    // user_name = 
-                    user_id = res.data._id
-                    onHide()
-                    showNavbar()
-                    if(res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
-                    else history.push(`/customer_dashboard/${res.data._id}`)
+                toast.success("Login Successfull", {
+                    position: "top-right"
+                })
+                if (res.data.role === "owner") {
+                    // setUser_id(res.data._id)
+                    // console.log("yessss")
+                    // <OwnerDashboard id={res.data.id} />
                 }
+                showLogin(true)
+                window.sessionStorage.setItem("signup_name", res.data.fullName)
+                setUser_name(res.data.fullName)
+                user_id = res.data._id
+                onHide()
+                showNavbar()
+                if (res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
+                else history.push(`/customer_dashboard/${res.data._id}`)
+            }
             )
             .catch(e => {
-                    console.log(e)
-                    // toast.error("Invalid registration", {
-                    //     position: "top-right"
-                    // })
-                }
+                console.log(e)
+                // toast.error("Invalid registration", {
+                //     position: "top-right"
+                // })
+            }
             )
     }
 
     const showNavbar = () => {
         axios.get(`http://localhost:4000/app/signup/${user_id}`)
-        .then(res => {
-            console.log(res.data)
-            setUser_name(res.data.fullName)
-            // setDishes(res.data)
-        }).catch(e => console.log(e))
+            .then(res => {
+                console.log(res.data)
+                setUser_name(res.data.fullName)
+                // setDishes(res.data)
+            }).catch(e => console.log(e))
         // .finally(setLoad(false))
     }
-
-    // useEffect(() => {
-    //     // console.log("showNav")
-    //     // showNavbar()
-    // }, [login])
+    
+    useEffect(() => {
+        if(user_name === null) {
+            setShow(false)
+        }
+    })
 
     const history = useHistory()
-    if(user_id != '') history.push(`/owner_dashboard/${user_id}`)
-    const onHide=() => setModalShow(false)
-    const seeModalShow = () => {setModalShow(true)}
+    if (user_id != '') history.push(`/owner_dashboard/${user_id}`)
+    const onHide = () => setModalShow(false)
+    const seeModalShow = () => { setModalShow(true) }
 
-    const renderButton = () => {
-        console.log(user_name)
-        if (user_name === "") {
-            return (
-                <Button variant="secondary" onClick={seeModalShow}>
-                    Sign up
-                </Button>
-            )
-        } else return <h3>{user_name}</h3>
+    const logout = () => {
+        console.log("logout clicked")
+        window.sessionStorage.removeItem("signup_name")
+        setUser_name(null)
+        history.push("/")
     }
 
-    return (
-        <nav className="navbar">
-            <div className="nav-center">
-                {/* <Link style={{ textDecoration: "none" }} to='/'> */}
-                    <h2>Food <span style={{ color: "red" }}>Corner</span></h2>
-                {/* </Link> */}
+    const renderLink = () => {
+        if (user_name === null) {
+            return (
                 <ul className="nav-links">
                     <li>
                         <Link to='/'>Home</Link>
@@ -105,7 +104,9 @@ const NavBar = () => {
                         <Link to='/about'>About</Link>
                     </li>
                     <li>
-                        {renderButton()}
+                        <Button variant="secondary" onClick={seeModalShow}>
+                            Sign up
+                    </Button>
 
                         <SignUpPopUp
                             show={modalShow}
@@ -116,6 +117,27 @@ const NavBar = () => {
                         />
                     </li>
                 </ul>
+            )
+        } else return (
+            <div>
+                {console.log(show)}
+                <span style={{ fontSize: '1.6rem', cursor: 'pointer' }} variant="danger" ref={target} onClick={() => setShow(!show)}>{user_name}</span>
+                <Overlay target={target.current} show={show} placement="bottom">
+                    {(props) => (
+                        <Tooltip id="overlay-example" {...props}>
+                            <span onClick={logout} style={{fontSize: '1.2rem', cursor: 'pointer'}}>Log Out</span>
+                        </Tooltip>
+                    )}
+                </Overlay>
+            </div>
+        )
+    }
+
+    return (
+        <nav className="navbar">
+            <div className="nav-center">
+                <h2>Food <span style={{ color: "red" }}>Corner</span></h2>
+                {renderLink()}
             </div>
         </nav>
     )

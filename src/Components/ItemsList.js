@@ -12,6 +12,7 @@ const ItemsList = (props) => {
     if(load){
         return <Loading />
     }
+    // console.log(props.dishes)
 
     if (props.dishes.length < 1) {
         return (

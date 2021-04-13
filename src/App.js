@@ -23,10 +23,10 @@ function App() {
                 <Route exact path='/about'><About /></Route>
                 <Route exact path='/owner_dashboard/:id'><OwnerDashboard /></Route>
                 <Route exact path='/customer_dashboard/:id'><CustomerDashboard /></Route>
-                <Route exact path='/dish_detail/:id'>{DishDetail}</Route>
+                <Route exact path='/dish_detail/:id'><DishDetail /></Route>
                 <Route exact path='*'><Error /></Route>
             </Switch>
-            {/* <Footer /> */}
+            <Footer />
         </Router>
     </>
   );

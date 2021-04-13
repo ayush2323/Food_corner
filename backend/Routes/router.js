@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const router = express.Router()
-const signupTemplete = require("../Models/signupModel")
+const ownerTemplete = require("../Models/signupModel")
 const customerTemplete = require("../Models/customerModel")
 const dishTemplete = require("../Models/onlyDish")
 const bcrypt = require('bcrypt')
@@ -35,7 +35,7 @@ router.post("/signup", async (req, res) => {
     const roleType = req.body.role
     let signedUpUser;
     if (roleType === 'owner') {
-        signedUpUser = new signupTemplete({
+        signedUpUser = new ownerTemplete({
             fullName: req.body.fullName,
             email: req.body.email,
             phone: req.body.phone,
@@ -77,7 +77,7 @@ router.patch("/signup/:id", async (req, res) => {
         const _id = req.params.id
         console.log("line 56 " + _id)
         console.log("line 57 " + req.body)
-        const updateData = await signupTemplete.findByIdAndUpdate(_id, req.body, { new: true })
+        const updateData = await ownerTemplete.findByIdAndUpdate(_id, req.body, { new: true })
         console.log("line 59 " + updateData)
         console.log("line 50", updateData)
         res.send(updateData)
@@ -88,7 +88,7 @@ router.patch("/signup/:id", async (req, res) => {
 
 router.get("/signup", async (req, res) => {
     try {
-        const getAllData = await signupTemplete.find({})
+        const getAllData = await ownerTemplete.find({})
         res.status(201).send(getAllData)
     } catch (e) {
         res.status(400).send(e)
@@ -98,7 +98,7 @@ router.get("/signup", async (req, res) => {
 router.get("/signup/:id", async (req, res) => {
     try {
         const _id = req.params.id
-        const getUserData = await signupTemplete.findOne({ _id })
+        const getUserData = await ownerTemplete.findOne({ _id })
         res.json(getUserData)
     } catch (e) {
         console.log(e)
@@ -111,7 +111,7 @@ router.post("/login", async (req, res) => {
         console.log("in login")
         const email = req.body.email
         const password = req.body.password
-        const getUser = await signupTemplete.findOne({ email })
+        const getUser = await ownerTemplete.findOne({ email })
         console.log("line 71 " + getUser)
         const isMatch = bcrypt.compare(password, getUser.password)
         console.log("line 74 " + isMatch)
@@ -144,9 +144,9 @@ router.patch("/dish/:id", upload, async (req, res) => {
         const _id = req.params.id
         // console.log(upload)
         // console.log(req.body)
-        // const updateData = await signupTemplete.findByIdAndUpdate(_id, req.body, {new: true})
+        // const updateData = await ownerTemplete.findByIdAndUpdate(_id, req.body, {new: true})
         // res.send(updateData)
-        // const getUserData = await signupTemplete.findOne({_id})
+        // const getUserData = await ownerTemplete.findOne({_id})
         // console.log("line 125 " + getUserData)
         // let newData = JSON.parse(JSON.stringify(getUserData))
         // console.log("line 127 " + newData.restaurant[0].restaurantMenu)
@@ -189,9 +189,18 @@ router.post("/dishes", async (req, res) => {
 router.get("/dishes", async(req, res) => {
     try {
         const getDishes = await dishTemplete.find()
-        console.log(getDishes)
         res.json(getDishes)
     } catch(e)  {console.log(e)}
+})
+
+router.get("/dish_detail/:id", async(req, res) => {
+    try {
+        const _id = req.params.id
+        console.log("line 200 "+_id)
+        const getDishData = await dishTemplete.findOne({ _id })
+        console.log("line 202 "+ getDishData)
+        res.json(getDishData)
+    } catch(e) {console.log(e)}
 })
 
 // router.post("/dish", (req, res) => {

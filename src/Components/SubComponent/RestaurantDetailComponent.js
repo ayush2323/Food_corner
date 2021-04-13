@@ -96,7 +96,7 @@ const RestaurantDetailComponent = (props) => {
                 {/* <h2>{restaurantDetail[0].restaurantDiscription}</h2> */}
                 {/* <p>Address: {restaurantDetail[0].restaurantAddress}</p>
                 <p>Phone: {restaurantDetail[0].restaurantPhone}</p> */}
-                <Button variant="success" onClick={() => setModalShow(true)}>Add Item to Restaurant</Button>
+                <Button style={{margin: '1rem'}} variant="success" onClick={() => setModalShow(true)}>Add Item to Restaurant</Button>
                 <MenuPopup menuItem={menuItem} ItemHandler={ItemHandler} addDishes={addDishes} show={modalShow} onHide={onHide} />
                 {showDishesList()}
             </div>

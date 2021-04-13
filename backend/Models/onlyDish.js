@@ -33,7 +33,7 @@ const dishTemplete = new mongoose.Schema({
     }
 })
 
-// signupTemplete.methods.generateAuthToken = async function() {
+// ownerTemplete.methods.generateAuthToken = async function() {
 //     try {
 //         const token = jwt.sign({_id: this._id.toString()}, process.env.SECRET_KEY)
 //         this.tokens = this.tokens.concat({token})
