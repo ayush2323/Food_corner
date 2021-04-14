@@ -59,7 +59,7 @@ const RestaurantDetailComponent = (props) => {
                     style={{ width: '48rem', textAlign: 'center' }}
                     className="m-2"
                 >
-                    <Card.Header><span style={{color: 'yellow', fontSize: '1.2rem', textAlign: 'center'}}>Restaurant Detail</span></Card.Header>
+                    <Card.Header><span style={{color: 'yellow', fontSize: '1.2rem', textAlign: 'center'}}>Restaurant Detail</span> <span style={{position: 'absolute', cursor: 'pointer', marginLeft: '15rem'}} onClick={props.editRestaurant}>Edit</span></Card.Header>
                     <Card.Body>
                         <Card.Title><span style={{color: 'white', fontSize: '2rem', textAlign: 'center'}}>{restaurantDetail[0].restaurantName}</span></Card.Title>
                         <Card.Text>

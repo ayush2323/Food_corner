@@ -9,7 +9,7 @@ import Loading from '../Components/Loading'
 import { useCostumHooks } from '../context'
 
 const OwnerDashboard = (props) => {
-    const { showRestaurantForm } = useCostumHooks()
+    const { showRestaurantForm, setShowRestaurantForm } = useCostumHooks()
     const [modalShow, setModalShow] = useState(true);
     const [load, setLoad] = useState(false);
     const [rest, setRest] = useState([])
@@ -90,11 +90,17 @@ const OwnerDashboard = (props) => {
             })
     }
 
+    const editRestaurant = () => {
+        console.log("editRestaurant")
+        setShowRestaurantForm(true)
+        setModalShow(true)
+    }
+
     const showRestaurantDetail = () => {
         if (showDetails) {
             if (rest.length > 0) {
                 return (
-                    <RestaurantDetailComponent id={id} restaurantDetail={rest} menuDetail={menuDetail} updateMenu={updateMenu} />
+                    <RestaurantDetailComponent id={id} restaurantDetail={rest} menuDetail={menuDetail} editRestaurant={editRestaurant} updateMenu={updateMenu} />
                 )
             } else return ""
         } else return <center><button style={{margin: '2rem', height: '3rem', width: '10rem', padding: '.5rem'}} onClick={() => setModalShow(true)}>Add Restaurant</button></center>
@@ -119,7 +125,6 @@ const OwnerDashboard = (props) => {
 
     return (
         <div style={{ backgroundColor: 'rgb(212, 196, 196)', height: '100%' }} data-backdrop="static" data-keyboard="false">
-            {console.log(showRestaurantForm)}
             {showRestaurantDetail()}
             {showPopupOrNot()}
             <ToastContainer />
