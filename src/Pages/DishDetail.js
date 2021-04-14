@@ -7,6 +7,7 @@ const DishDetail = (props) => {
     const history = useHistory()
     console.log(id)
     const [dishDetail, setDishDetail] = useState({})
+    console.log(dishDetail)
 
     const getDishDetail = () => {
         axios.get(`http://localhost:4000/app/dish_detail/${id}`)
@@ -26,7 +27,7 @@ const DishDetail = (props) => {
     }, [])
     return (
         <div>
-            <section style={{marginTop: '1rem'}} className="section cocktail-section">
+            <section className="section cocktail-section">
             <button onClick={go_back} className='btn btn-primary'>Back Home</button>
             <h2 className="section-title">{dishDetail.ItemName}</h2>
             <div className="drink">

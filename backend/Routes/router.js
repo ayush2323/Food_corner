@@ -180,13 +180,17 @@ router.patch("/dish/:id", upload, async (req, res) => {
 
 router.post("/dishes", async (req, res) => {
     try {
+        console.log(req.body)
         dishDetails = new dishTemplete({
             ItemName: req.body.ItemName,
             ItemDiscription: req.body.ItemDiscription,
             ItemCatagory: req.body.ItemCatagory,
             ItemType: req.body.ItemType,
             Constituents: req.body.Constituents,
-            price: req.body.price
+            price: req.body.price,
+            restaurantName: req.body.restaurantName,
+            restaurantAddress: req.body.restaurantAddress,
+            restantantPhone: req.body.restantantPhone
         })
         dishDetails.save()
             .then(data => {

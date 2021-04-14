@@ -38,7 +38,7 @@ const dishTemplete = new mongoose.Schema({
         type: String
     },
     restantantPhone: {
-        type: String
+        type: Number
     }
 })
 
