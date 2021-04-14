@@ -24,7 +24,7 @@ const MenuPopup = (props) => {
             <FormCol name={"Item Catagory"} sendName={"ItemCatagory"} value={menuItem.ItemCatagory} controlId={'ItemCatagory'} type={"text"} placeholder={"Enter item catagory"} changeHandler={ItemHandler} />
             <div key={`default-radio`} className="mb-3">
               <div className="adjust_radio">
-                <Form.Check value="veg" onClick={ItemHandler} type="radio" id={`default-radio`} name="ItemType" label={`Veg`} />
+                <Form.Check value="veg" onClick={ItemHandler} type="radio" id={`default-radio`} name="ItemType" label={`Veg`} defaultChecked />
                 <Form.Check value="non veg" onClick={ItemHandler} type="radio" id={`radio`} name="ItemType" label={`Non Veg`} />
               </div>
             </div>

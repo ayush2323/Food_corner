@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import FormCol from './SubComponent/FormCol'
 
 function RestaurantPopUp(props) {
-
+  console.log(props)
   return (
     <div>
       <Modal

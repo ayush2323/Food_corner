@@ -11,7 +11,7 @@
   --darkGrey: #afafaf;
   --mainRed: #bd0303;
   --mainTransition: all 0.3s linear;
-  --mainSpacing: 0.3rem;
+  --mainSpacing: 0.1rem;
   --lightShadow: 2px 5px 3px 0px rgba(0, 0, 0, 0.5);
   --darkShadow: 4px 10px 5px 0px rgba(0, 0, 0, 0.5);
   --mainBorderRadius: 0.25rem;
@@ -47,7 +47,7 @@
   font-weight: 700;
   margin-right: .5rem;
   font-weight: 400;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   font-size: 1.6rem;
   padding: .25rem .5rem;
   transition: all .3s linear;

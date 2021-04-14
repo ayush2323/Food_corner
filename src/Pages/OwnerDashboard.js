@@ -9,7 +9,7 @@ import Loading from '../Components/Loading'
 import { useCostumHooks } from '../context'
 
 const OwnerDashboard = (props) => {
-    const {showRestaurantForm} = useCostumHooks()
+    const { showRestaurantForm } = useCostumHooks()
     const [modalShow, setModalShow] = useState(true);
     const [load, setLoad] = useState(false);
     const [rest, setRest] = useState([])
@@ -21,10 +21,10 @@ const OwnerDashboard = (props) => {
     const [menuDetail, setMenuDetail] = useState([])
 
     const updateMenu = (menuItem) => {
-        let updateMenu = {...rest}
+        let updateMenu = { ...rest }
         updateMenu[0].restaurantMenu.push(menuItem)
         setRestaurant(updateMenu)
-        const addedMenu = {"restaurant": [updateMenu[0]]}
+        const addedMenu = { "restaurant": [updateMenu[0]] }
         axios.patch(`http://localhost:4000/app/signup/dish/${id}`, addedMenu)
             .then(res => {
                 console.log(res.data)
@@ -62,9 +62,9 @@ const OwnerDashboard = (props) => {
                 setShowDetails(true)
             }).catch(e => console.log(e))
             .finally(setLoad(false))
-        }
+    }
 
-    if(load) return <Loading />
+    if (load) return <Loading />
 
 
     const submitRestaurantDetail = (e) => {
@@ -91,34 +91,35 @@ const OwnerDashboard = (props) => {
     }
 
     const showRestaurantDetail = () => {
-        if(showDetails) {
-            if(rest.length > 0) {
+        if (showDetails) {
+            if (rest.length > 0) {
                 return (
                     <RestaurantDetailComponent id={id} restaurantDetail={rest} menuDetail={menuDetail} updateMenu={updateMenu} />
                 )
             } else return ""
-        } else return ""
+        } else return <center><button style={{margin: '2rem', height: '3rem', width: '10rem', padding: '.5rem'}} onClick={() => setModalShow(true)}>Add Restaurant</button></center>
     }
 
     const showPopupOrNot = () => {
-        if(showRestaurantForm) {
+        if (showRestaurantForm) {
             return (
                 <RestaurantPopUp
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                user_id={id}
-                restaurantDetail={restaurantDetail}
-                detailHandler={detailHandler}
-                submitRestaurantDetail={submitRestaurantDetail}
-                data-backdrop="static"
-                data-keyboard="false"
-            />
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    user_id={id}
+                    restaurantDetail={restaurantDetail}
+                    detailHandler={detailHandler}
+                    submitRestaurantDetail={submitRestaurantDetail}
+                    data-backdrop="static"
+                    data-keyboard="false"
+                />
             )
         } else return ''
     }
 
     return (
-        <div style={{backgroundColor: 'rgb(212, 196, 196)', height: '100%'}} data-backdrop="static" data-keyboard="false">
+        <div style={{ backgroundColor: 'rgb(212, 196, 196)', height: '100%' }} data-backdrop="static" data-keyboard="false">
+            {console.log(showRestaurantForm)}
             {showRestaurantDetail()}
             {showPopupOrNot()}
             <ToastContainer />

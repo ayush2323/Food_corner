@@ -165,7 +165,6 @@ const NavBar = () => {
                     {(props) => (
                         <Tooltip id="overlay-example" {...props}>
                             <span onClick={logout} style={{fontSize: '1.2rem', cursor: 'pointer', padding: '1rem'}}>Log Out</span><br></br>
-                            <span style={{fontSize: '1.2rem', cursor: 'pointer', padding: '1rem'}}>Profile</span>
                         </Tooltip>
                     )}
                 </Overlay>

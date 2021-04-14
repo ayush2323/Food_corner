@@ -16,7 +16,7 @@ Variables
   --darkGrey: #afafaf;
   --mainRed: #bd0303;
   --mainTransition: all 0.3s linear;
-  --mainSpacing: 0.1rem;
+  --mainSpacing: 0.2rem;
   --lightShadow: 2px 5px 3px 0px rgba(0, 0, 0, 0.5);
   --darkShadow: 4px 10px 5px 0px rgba(0, 0, 0, 0.5);
   --mainBorderRadius: 0.25rem;
@@ -293,7 +293,7 @@ About
 .about-section p {
   line-height: 2rem;
   font-weight: 400;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 /* 

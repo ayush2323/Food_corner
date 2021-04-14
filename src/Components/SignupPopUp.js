@@ -19,8 +19,8 @@ function SignupPopUp(props) {
                     <FormCol name={"Phone"} sendName={"phone"} value={props.user.phone} controlId={'Phone'} type={"number"} placeholder={"Enter phone"} changeHandler={props.inputHandler} />
                     <div key={`default-radio`} className="mb-3">
                         <div className="adjust_radio">
-                            <Form.Check value="owner" onClick={props.inputHandler} type="radio" id={`default-radio`} name="role" label={`Owner`} />
-                            <Form.Check value="customer" onClick={props.inputHandler} type="radio" id={`radio`} name="role" label={`Customer`} />
+                            <Form.Check value="customer" onClick={props.inputHandler} type="radio" id={`radio`} name="role" label={`Customer`}  defaultChecked />
+                            <Form.Check value="owner" onClick={props.inputHandler} type="radio" id={`default-radio`} name="role" label={`Owner`}/>
                         </div>
                     </div>
                     <FormCol name={"Address"} sendName={"address"} value={props.user.address} controlId={'Address'} type={"text"} placeholder={"Enter Address"} changeHandler={props.inputHandler} />
