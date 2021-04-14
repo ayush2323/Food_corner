@@ -7,12 +7,12 @@ import { Redirect, Link } from 'react-router-dom'
 const AppContext = React.createContext()
 
 const AppProvider = ({children}) => {
-    console.log(children)
     const [login, setLogin] = useState(false)
     const [modalShow, setModalShow] = useState(false);
     const [dishes, setDishes] = useState([])
     const [load, setLoad] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
+    const [showRestaurantForm, setShowRestaurantForm] = useState(false)
 
     const handleSubmit = () => {
         console.log("handleSubmit")
@@ -26,7 +26,6 @@ const AppProvider = ({children}) => {
         setLoad(true)
         axios.get(`http://localhost:4000/app/dishes`)
         .then(res => {
-            console.log(res.data)
             setDishes(res.data)
         }).catch(e => console.log(e))
         .finally(setLoad(false))
@@ -92,7 +91,7 @@ const AppProvider = ({children}) => {
     const onHide=() => setModalShow(false)
 
     return (
-        <AppContext.Provider value={{setSearchTerm, login, setLogin, user, inputHandler, showSignUpPage, showLoginPage, submitSignup, login_form, modalShow, setModalShow, onHide, ToastContainer, user_name, seeModalShow, user_id, showDishes, load, dishes, searchTerm}}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{setSearchTerm, login, setLogin, user, inputHandler, showSignUpPage, showLoginPage, submitSignup, login_form, modalShow, setModalShow, onHide, ToastContainer, user_name, seeModalShow, user_id, showDishes, load, dishes, searchTerm, showRestaurantForm, setShowRestaurantForm}}>{children}</AppContext.Provider>
     )
 }
 

@@ -30,6 +30,15 @@ const dishTemplete = new mongoose.Schema({
     price: {
         type: Number,
         require: true
+    },
+    restaurantName: {
+        type: String
+    },
+    restaurantAddress: {
+        type: String
+    },
+    restantantPhone: {
+        type: String
     }
 })
 

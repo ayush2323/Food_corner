@@ -9,37 +9,9 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 function SignupPopUp(props) {
-    const [login_user, setLoginUser] = useState({
-        email: "", password: ""
-    })
-    const [showLoginForm, setShowLoginForm] = useState(false)
-    const history = useHistory()
-
-    let login_name, login_value
-    const loginHandler = (e) => {
-        login_name = e.target.name
-        login_value = e.target.value
-        setLoginUser({...login_user, [login_name]: login_value })
-    }
-
-    const showSignUpPage = () => (setShowLoginForm(false))
-    const showLoginPage = () => (setShowLoginForm(true))
-
-    const submiLogin = (e) => {
-        e.preventDefault()
-        const { email, password } = login_user
-        axios.post('http://localhost:4000/app/login', {email, password})
-            .then(res => {
-                console.log(res)
-                if(res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
-                else history.push(`/customer_dashboard/${res.data._id}`)
-                props.onHide(true)
-            })
-            .catch(e => console.error(e))
-    }
 
     const showSignupOrLogin = () => {
-        if (!showLoginForm) {
+        if (!props.showLoginForm) {
             return (
                 <Form onSubmit={props.submitSignup}>
                     <FormCol name={"Full name"} sendName={"fullName"} value={props.user.name} controlId={'Name'} type={"text"} placeholder={"Enter name"} changeHandler={props.inputHandler} />
@@ -54,19 +26,18 @@ function SignupPopUp(props) {
                     <FormCol name={"Address"} sendName={"address"} value={props.user.address} controlId={'Address'} type={"text"} placeholder={"Enter Address"} changeHandler={props.inputHandler} />
                     <FormCol name={"Password"} sendName={"password"} value={props.user.password} controlId={'Password'} type={"password"} placeholder={"Enter Password"} changeHandler={props.inputHandler} />
                     <Button variant="primary" type="submit">Submit</Button>
-                    {/* <Link to={`/cocktail/${id}`} className="btn btn-primary btn-details">Details</Link> */}
                 </Form>
             )
         } else {
             return (
-                <Form onSubmit={submiLogin} action="/login" method="POST">
+                <Form onSubmit={props.submiLogin} action="/login" method="POST">
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control name="email" onChange={loginHandler} value={login_user.email} type="email" placeholder="Enter email" />
+                        <Form.Control name="email" onChange={props.loginHandler} value={props.login_user.email} type="email" placeholder="Enter email" />
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control name="password" onChange={loginHandler} value={login_user.password} type="password" placeholder="Password" />
+                        <Form.Control name="password" onChange={props.loginHandler} value={props.login_user.password} type="password" placeholder="Password" />
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
                 </Form>
@@ -85,8 +56,8 @@ function SignupPopUp(props) {
             >
                 <Modal.Header closeButton>
                     <div className="adjust_btn">
-                        <Button variant="primary" onClick={showSignUpPage}>Sign Up</Button>
-                        <Button variant="primary" onClick={showLoginPage}>Log In</Button>
+                        <Button variant="primary" onClick={props.showSignUpPage}>Sign Up</Button>
+                        <Button variant="primary" onClick={props.showLoginPage}>Log In</Button>
                     </div>
                 </Modal.Header>
                 <Modal.Body>

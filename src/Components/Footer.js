@@ -7,36 +7,10 @@ const Footer = () => {
             <footer className="footer">
                 <div className="footer-div">
                     <ul>
-                        <li>Privacy Policy</li>
-                        <li>Terms</li>
-                        <li>Blog</li>
-                        <li>Community</li>
-                        <li>Join The Team</li>
-                        <li>Press</li>
-                    </ul>
-                </div>
-                <div className="footer-div">
-                    <ul>
-                        <li>Code Of Conduct</li>
-                        <li>Clain your Listing</li>
-                        <li>Security</li>
-                        <li>Site Map</li>
-                    </ul>
-                </div>
-                <div className="footer-div">
-                    <ul>
-                        <li><i class="fab fa-instagram"></i> Instagram</li>
+                        <li><i class="fab fa-instagram"></i> Github</li>
                         <li><i class="fab fa-facebook"></i> Facebook</li>
                         <li><i class="fab fa-twitter-square"></i> Twitter</li>
-                        <li><i class="fab fa-pinterest"></i> Pintrest</li>
-                    </ul>
-                </div>
-                <div className="footer-div">
-                    <ul>
-                        <li><i class="fab fa-instagram"></i> Instagram</li>
-                        <li><i class="fab fa-facebook"></i> Facebook</li>
-                        <li><i class="fab fa-twitter-square"></i> Twitter</li>
-                        <li><i class="fab fa-pinterest"></i> Pintrest</li>
+                        <li><i class="fab fa-pinterest"></i> LinkedIn</li>
                     </ul>
                 </div>
             </footer>

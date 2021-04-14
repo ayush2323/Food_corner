@@ -86,6 +86,20 @@ router.patch("/signup/:id", async (req, res) => {
     }
 })
 
+// update menu
+router.patch("/signup/dish/:id", async (req, res) => {
+    try {
+        const _id = req.params.id
+        console.log("line 93 " + _id)
+        console.log("line 94 " + req.body)
+        const updateData = await ownerTemplete.findByIdAndUpdate(_id, req.body, { new: true })
+        console.log("line 96 " + updateData)
+        res.send(updateData)
+    } catch (e) {
+        res.status(404).send(e)
+    }
+})
+
 router.get("/signup", async (req, res) => {
     try {
         const getAllData = await ownerTemplete.find({})
@@ -200,6 +214,17 @@ router.get("/dish_detail/:id", async(req, res) => {
         const getDishData = await dishTemplete.findOne({ _id })
         console.log("line 202 "+ getDishData)
         res.json(getDishData)
+    } catch(e) {console.log(e)}
+})
+
+router.get("/owner_dish_detail/:id", async(req, res) => {
+    try {
+        console.log("line 222")
+        const _id = req.params.id
+        console.log("line 223"+ _id)
+        const getOwner_dish_detail = await ownerTemplete.findOne({_id})
+        console.log("line 225"+ getOwner_dish_detail)
+        res.json(getOwner_dish_detail)
     } catch(e) {console.log(e)}
 })
 

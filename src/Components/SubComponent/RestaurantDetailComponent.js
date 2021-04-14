@@ -9,12 +9,13 @@ import Card from 'react-bootstrap/Card'
 
 const RestaurantDetailComponent = (props) => {
     const restaurantDetail = props.restaurantDetail
+    console.log(restaurantDetail)
     const id = props.id
     const [modalShow, setModalShow] = useState(false);
     const [menuItem, setMenuItem] = useState({
-        ItemName: "", ItemDiscription: "", ItemCatagory: "", ItemType: "", Constituents: "", price: ""
+        ItemName: "", ItemDiscription: "", ItemCatagory: "", ItemType: "", Constituents: "", price: "", restaurantName: restaurantDetail[0].restaurantName, restaurantAddress: restaurantDetail[0].restaurantAddress, restaurantPhone: restaurantDetail[0].restaurantPhone
     })
-    const [dishList, setDishList] = useState([])
+    const [dish_id, setDish_id] = useState('')
 
     let item_name, item_value
     const ItemHandler = (e) => {
@@ -23,55 +24,30 @@ const RestaurantDetailComponent = (props) => {
         setMenuItem({ ...menuItem, [item_name]: item_value })
     }
 
-    const addItem = (e) => {
-        e.preventDefault()
-        const restaurantMenu = { "restaurantMenu": [menuItem] }
-
-        axios.patch(`http://localhost:4000/app/dish/${id}`, restaurantMenu)
-            .then(res => {
-                console.log(res.data)
-                toast.success("Restaurant Added", {
-                    position: "top-right"
-                })
-                setModalShow(false)
-            })
-            .catch(e => {
-                console.log(e)
-                toast.error("Invalid registration", {
-                    position: "top-right"
-                })
-            })
-    }
-
     const onHide = () => setModalShow(false)
     const seeModalShow = () => { setModalShow(true) }
 
     const addDishes = (e) => {
-        console.log(menuItem)
         e.preventDefault()
+        console.log(menuItem)
+        props.updateMenu(menuItem)
         axios.post(`http:///localhost:4000/app/dishes`, menuItem)
             .then(res => {
+                console.log(res)
+                setDish_id(res.data._id)
                 onHide()
-                showDishes()
             })
             .catch(e => console.log(e))
     }
 
-    const showDishes = () => {
-        axios.get(`http://localhost:4000/app/dishes`)
-            .then(res => {
-                setDishList(res.data)
-            }).catch(e => console.log(e))
-    }
-
     const showDishesList = () => {
-        if (dishList.length != 0) {
+        if (props.menuDetail.length != 0) {
             return (
-                dishList.map((item, index) => {
+                props.menuDetail.map((item, index) => {
                     return <DishesList key={index} item={item} />
                 })
             )
-        } else return ""
+        } else return <h1>No Item Added</h1>
     }
 
     return (
@@ -93,9 +69,6 @@ const RestaurantDetailComponent = (props) => {
                         </Card.Text>
                     </Card.Body>
                 </Card>
-                {/* <h2>{restaurantDetail[0].restaurantDiscription}</h2> */}
-                {/* <p>Address: {restaurantDetail[0].restaurantAddress}</p>
-                <p>Phone: {restaurantDetail[0].restaurantPhone}</p> */}
                 <Button style={{margin: '1rem'}} variant="success" onClick={() => setModalShow(true)}>Add Item to Restaurant</Button>
                 <MenuPopup menuItem={menuItem} ItemHandler={ItemHandler} addDishes={addDishes} show={modalShow} onHide={onHide} />
                 {showDishesList()}

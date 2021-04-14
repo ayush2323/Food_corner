@@ -37,7 +37,10 @@ const DishDetail = (props) => {
                     <p><span className="drink-data">info: </span>{dishDetail.ItemDiscription}</p>
                     <p><span className="drink-data">Type: </span>{dishDetail.ItemType}</p>
                     <p><span className="drink-data">Constituents: </span>{dishDetail.Constituents}</p>
-                    <p><span className="drink-data">Price: </span>{dishDetail.price}</p>
+                    <p><span className="drink-data">Price: </span>₹. {dishDetail.price}</p>
+                    <p><span className="drink-data">Restaurant name: </span>{dishDetail.restaurantName}</p>
+                    <p><span className="drink-data">Restaurant address: </span>{dishDetail.restaurantAddress}</p>
+                    <p><span className="drink-data">Restaurant phone: </span>{dishDetail.restaurantPhone}</p>
                 </div>
             </div>
         </section>

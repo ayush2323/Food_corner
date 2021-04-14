@@ -13,7 +13,7 @@ const MenuPopup = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton><center><h6>Write detail of Item</h6></center></Modal.Header>
+        <Modal.Header closeButton><center><span>Write detail of Item</span></center></Modal.Header>
         <Modal.Body>
           <Form onSubmit={addDishes} encType="multipart/form-data">
             <FormCol name={"Item Name"} sendName={"ItemName"} value={menuItem.ItemName} controlId={'ItemName'} type={"text"} placeholder={"Enter item name"} changeHandler={ItemHandler} />

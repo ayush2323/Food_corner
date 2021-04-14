@@ -1,17 +1,29 @@
 .footer{
-  height: 200px;
+  /* height: 200px; */
   background-color: #191a19;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 }
 .footer-div{
-  width: 24%;
+  /* width: 24%; */
   margin:10px;
 }
 .footer-div ul{
   list-style: none;
   color:whitesmoke;
   line-height: 1.5;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
 }
+
+li {
+  margin: 0 20px;
+}
+
 .footer-bottom{
   padding: 0px 100px 10px 100px;
   background-color: #191a19;

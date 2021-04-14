@@ -10,7 +10,7 @@ const Item = (props) => {
             </div> */}
             <div className="cocktail-footer">
                 <h3>{itemy.ItemName}</h3>
-                <h4>{itemy.price}</h4>
+                <h4>₹. {itemy.price}</h4>
                 <Link to={`/dish_detail/${itemy._id}`} className="btn btn-primary btn-details">Show More</Link>
             </div>
         </article>

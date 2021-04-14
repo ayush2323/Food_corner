@@ -1,8 +1,8 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const DishesList = (props) => {
     const itemy = props.item
-    // console.log(props.item.ItemCatagory)
     
     return (
         <div>
@@ -12,8 +12,8 @@ const DishesList = (props) => {
             </div> */}
             <div className="cocktail-footer">
                 <h3>{itemy.ItemName}</h3>
-                <h4>{itemy.price} Rs.</h4>
-                {/* <Link to={`/cocktail/${id}`} className="btn btn-primary btn-details">Details</Link> */}
+                <h4>₹. {itemy.price}</h4>
+                <Link to={`/owner_dish_detail/${itemy._id}`} className="btn btn-primary btn-details">Show More</Link>
             </div>
         </article>
         </div>

@@ -11,15 +11,20 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Modal, Button } from 'react-bootstrap'
 import Overlay from 'react-bootstrap/Overlay'
 import Tooltip from 'react-bootstrap/Tooltip'
+import { useCostumHooks } from '../context'
 
 const NavBar = () => {
+    const {showRestaurantForm, setShowRestaurantForm} = useCostumHooks()
     const [modalShow, setModalShow] = useState(false);
     const [login, showLogin] = useState(false)
-    const [show, setShow] = useState(true);
-    const [first, setFirst] = useState(true)
+    const [show, setShow] = useState(false);
+    const [showLoginForm, setShowLoginForm] = useState(false)
     const target = useRef(null);
     const [user, setUser] = useState({
         fullName: "", email: "", phone: "", address: "", password: "", role: ""
+    })
+    const [login_user, setLoginUser] = useState({
+        email: "", password: ""
     })
     const [user_name, setUser_name] = useState(window.sessionStorage.getItem("signup_name"))
 
@@ -28,6 +33,35 @@ const NavBar = () => {
         signin_name = e.target.name
         signin_value = e.target.value
         setUser({ ...user, [signin_name]: signin_value })
+    }
+
+    let login_name, login_value
+    const loginHandler = (e) => {
+        login_name = e.target.name
+        login_value = e.target.value
+        setLoginUser({...login_user, [login_name]: login_value })
+    }
+
+    const showSignUpPage = () => (setShowLoginForm(false))
+    const showLoginPage = () => (setShowLoginForm(true))
+
+    const submiLogin = (e) => {
+        e.preventDefault()
+        const { email, password } = login_user
+        axios.post('http://localhost:4000/app/login', {email, password})
+            .then(res => {
+                console.log(res)
+                window.sessionStorage.setItem("signup_name", res.data.fullName)
+                setUser_name(res.data.fullName)
+                user_id = res.data._id
+                onHide()
+                showNavbar()
+                setShowRestaurantForm(false)
+                if(res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
+                else history.push(`/customer_dashboard/${res.data._id}`)
+                onHide(true)
+            })
+            .catch(e => console.error(e))
     }
 
     let user_id = ''
@@ -47,6 +81,7 @@ const NavBar = () => {
                     // <OwnerDashboard id={res.data.id} />
                 }
                 showLogin(true)
+                setShowRestaurantForm(true)
                 window.sessionStorage.setItem("signup_name", res.data.fullName)
                 setUser_name(res.data.fullName)
                 user_id = res.data._id
@@ -54,8 +89,7 @@ const NavBar = () => {
                 showNavbar()
                 if (res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
                 else history.push(`/customer_dashboard/${res.data._id}`)
-            }
-            )
+            })
             .catch(e => {
                 console.log(e)
                 // toast.error("Invalid registration", {
@@ -114,18 +148,24 @@ const NavBar = () => {
                             user={user}
                             inputHandler={inputHandler}
                             submitSignup={submitSignup}
+                            submiLogin={submiLogin}
+                            login_user={login_user}
+                            loginHandler={loginHandler}
+                            showLoginForm={showLoginForm}
+                            showSignUpPage={showSignUpPage}
+                            showLoginPage={showLoginPage}
                         />
                     </li>
                 </ul>
             )
         } else return (
             <div>
-                {console.log(show)}
                 <span style={{ fontSize: '1.6rem', cursor: 'pointer' }} variant="danger" ref={target} onClick={() => setShow(!show)}>{user_name}</span>
                 <Overlay target={target.current} show={show} placement="bottom">
                     {(props) => (
                         <Tooltip id="overlay-example" {...props}>
-                            <span onClick={logout} style={{fontSize: '1.2rem', cursor: 'pointer'}}>Log Out</span>
+                            <span onClick={logout} style={{fontSize: '1.2rem', cursor: 'pointer', padding: '1rem'}}>Log Out</span><br></br>
+                            <span style={{fontSize: '1.2rem', cursor: 'pointer', padding: '1rem'}}>Profile</span>
                         </Tooltip>
                     )}
                 </Overlay>
