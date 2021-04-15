@@ -14,7 +14,7 @@ import Tooltip from 'react-bootstrap/Tooltip'
 import { useCostumHooks } from '../context'
 
 const NavBar = () => {
-    const {showRestaurantForm, setShowRestaurantForm} = useCostumHooks()
+    const { showRestaurantForm, setShowRestaurantForm } = useCostumHooks()
     const [modalShow, setModalShow] = useState(false);
     const [login, showLogin] = useState(false)
     const [show, setShow] = useState(false);
@@ -39,7 +39,7 @@ const NavBar = () => {
     const loginHandler = (e) => {
         login_name = e.target.name
         login_value = e.target.value
-        setLoginUser({...login_user, [login_name]: login_value })
+        setLoginUser({ ...login_user, [login_name]: login_value })
     }
 
     const showSignUpPage = () => (setShowLoginForm(false))
@@ -48,7 +48,7 @@ const NavBar = () => {
     const submiLogin = (e) => {
         e.preventDefault()
         const { email, password } = login_user
-        axios.post('http://localhost:4000/app/login', {email, password})
+        axios.post('http://localhost:4000/app/login', { email, password })
             .then(res => {
                 console.log(res)
                 window.sessionStorage.setItem("signup_name", res.data.fullName)
@@ -57,7 +57,7 @@ const NavBar = () => {
                 onHide()
                 showNavbar()
                 setShowRestaurantForm(false)
-                if(res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
+                if (res.data.role === "owner") history.push(`/owner_dashboard/${res.data._id}`)
                 else history.push(`/customer_dashboard/${res.data._id}`)
                 onHide(true)
             })
@@ -108,9 +108,9 @@ const NavBar = () => {
             }).catch(e => console.log(e))
         // .finally(setLoad(false))
     }
-    
+
     useEffect(() => {
-        if(user_name === null) {
+        if (user_name === null) {
             setShow(false)
         }
     })
@@ -138,9 +138,9 @@ const NavBar = () => {
                         <Link to='/about'>About</Link>
                     </li>
                     <li>
-                        <Button variant="secondary" onClick={seeModalShow}>
-                            Sign up
-                    </Button>
+                        <Button id="signup_btn" variant="secondary" onClick={seeModalShow}>
+                            <span id="signup_val">Sign up</span>
+                        </Button>
 
                         <SignUpPopUp
                             show={modalShow}
@@ -164,7 +164,7 @@ const NavBar = () => {
                 <Overlay target={target.current} show={show} placement="bottom">
                     {(props) => (
                         <Tooltip id="overlay-example" {...props}>
-                            <span onClick={logout} style={{fontSize: '1.2rem', cursor: 'pointer', padding: '1rem'}}>Log Out</span><br></br>
+                            <span onClick={logout} style={{ fontSize: '1.2rem', cursor: 'pointer', padding: '1rem' }}>Log Out</span><br></br>
                         </Tooltip>
                     )}
                 </Overlay>
@@ -175,7 +175,9 @@ const NavBar = () => {
     return (
         <nav className="navbar">
             <div className="nav-center">
-                <h2>Food <span style={{ color: "red" }}>Corner</span></h2>
+                <div className="nav_left">
+                    <h2 className="logo">Food <span style={{ color: "red" }}>Corner</span></h2>
+                </div>
                 {renderLink()}
             </div>
         </nav>

@@ -27,6 +27,7 @@
   align-items: center;
   border-bottom: 2px solid var(--primaryColor);
   box-shadow: var(--lightShadow);
+  width: 100%;
 }
 .nav-center {
   display: flex;
@@ -60,4 +61,80 @@
 .vl {
   border-left: 6px solid green;
   height: 500px;
+}
+
+@media screen and (max-width: 766px) {
+  .nav-links a {
+    margin-right: .5rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  #signup_btn {
+    width: 4rem;
+    height: 1.7rem;
+    padding: 0rem
+  }
+
+  #signup_val {
+    font-size: .7rem;
+
+  }
+}
+
+@media screen and (max-width: 645px) {
+  .nav-links a {
+    margin-right: .5rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+  }
+
+  .nav_left {
+    width: 100%;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  #signup_btn {
+    width: 4rem;
+    height: 1.7rem;
+    padding: 0rem
+  }
+
+  #signup_val {
+    font-size: .7rem;
+
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .nav-links a {
+    margin-right: .5rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+  }
+
+  .logo {
+    font-size: .8rem;
+  }
+
+  #signup_btn {
+    width: 4rem;
+    height: 1.7rem;
+    padding: 0rem
+  }
+
+  #signup_val {
+    font-size: .7rem;
+
+  }
 }

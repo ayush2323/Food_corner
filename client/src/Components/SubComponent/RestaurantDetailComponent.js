@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap'
 import MenuPopup from '../MenuPopup'
 import DishesList from './DishesList'
 import Pagination from './Pagination'
+import Loading from '../Loading'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -41,6 +42,15 @@ const RestaurantDetailComponent = (props) => {
     const onHide = () => setModalShow(false)
     const seeModalShow = () => { setModalShow(true) }
 
+    const editHandler = (e) => {
+        console.log(e.target.ns)
+    }
+
+    const deleteHandler = (e) => {
+        console.log(e.target)
+        console.log(e.target.value)
+    }
+
     const addDishes = (e) => {
         e.preventDefault()
         console.log(menuItem)
@@ -65,7 +75,7 @@ const RestaurantDetailComponent = (props) => {
                             <section className="section">
                                 <div className="cocktails-center">
                                     {props.menuDetail.slice(pagination.start, pagination.end).map((item, index) => (
-                                        <DishesList key={index} item={item} />
+                                        <DishesList editHandler={editHandler} deleteHandler={deleteHandler} key={index} item={item} />
                                     ))}
                                 </div>
                             </section>

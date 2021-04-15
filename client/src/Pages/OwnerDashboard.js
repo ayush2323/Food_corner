@@ -53,9 +53,9 @@ const OwnerDashboard = (props) => {
     }
 
     const fetchRestaurantDetails = () => {
+        // setLoad(true)
         axios.get(`http://localhost:4000/app/signup/${id}`)
             .then(res => {
-                setLoad(false)
                 setRest(res.data.restaurant)
                 console.log(res.data.restaurant[0].restaurantMenu)
                 setMenuDetail(res.data.restaurant[0].restaurantMenu)
@@ -65,7 +65,6 @@ const OwnerDashboard = (props) => {
     }
 
     if (load) return <Loading />
-
 
     const submitRestaurantDetail = (e) => {
         e.preventDefault()
@@ -105,7 +104,7 @@ const OwnerDashboard = (props) => {
             } else return ""
         } else return (
             <center>
-                <button style={{margin: '2rem', height: '3rem', width: '10rem', padding: '.5rem'}} onClick={() => setModalShow(true)}>Add Restaurant</button>
+                <button style={{ margin: '2rem', height: '3rem', width: '10rem', padding: '.5rem' }} onClick={() => setModalShow(true)}>Add Restaurant</button>
                 <h2>Please add restaurant detail</h2>
             </center>
         )
