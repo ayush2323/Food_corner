@@ -28,7 +28,7 @@ const DishDetail = (props) => {
     return (
         <div>
             <section className="section cocktail-section">
-            <button onClick={go_back} className='btn btn-primary'>Back Home</button>
+            <button onClick={go_back} className='btn btn-primary mt-3'>Back Home</button>
             <h2 className="section-title">{dishDetail.ItemName}</h2>
             <div className="drink">
                 {/* <img src={image} alt={name}></img> */}

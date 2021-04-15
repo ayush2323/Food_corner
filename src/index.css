@@ -33,6 +33,8 @@ body {
   line-height: 1.0;
   font-size: 1rem;
   font-weight: 300;
+  height: 100vh;
+  background-color: rgb(212, 196, 196);
 }
 
 code {
@@ -63,6 +65,12 @@ a {
 
 link {
   text-decoration: none;
+}
+
+/*  owner dashboard */
+.owner {
+  height: 100vh;
+  background-color: rgb(212, 196, 196);
 }
 
 /* 

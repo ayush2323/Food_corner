@@ -7,10 +7,10 @@ const Footer = () => {
             <footer className="footer">
                 <div className="footer-div">
                     <ul>
-                        <li><i class="fab fa-instagram"></i> Github</li>
-                        <li><i class="fab fa-facebook"></i> Facebook</li>
-                        <li><i class="fab fa-twitter-square"></i> Twitter</li>
-                        <li><i class="fab fa-pinterest"></i> LinkedIn</li>
+                        <li><i className="fab fa-instagram"></i> Github</li>
+                        <li><i className="fab fa-facebook"></i> Facebook</li>
+                        <li><i className="fab fa-twitter-square"></i> Twitter</li>
+                        <li><i className="fab fa-pinterest"></i> LinkedIn</li>
                     </ul>
                 </div>
             </footer>

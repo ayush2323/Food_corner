@@ -28,10 +28,10 @@ const OwnerDashboard = (props) => {
         axios.patch(`http://localhost:4000/app/signup/dish/${id}`, addedMenu)
             .then(res => {
                 console.log(res.data)
-                toast.success("Restaurant Added", {
+                setModalShow(false)
+                toast.success("Dish Added", {
                     position: "top-right"
                 })
-                setModalShow(false)
             })
             .catch(e => {
                 console.log(e)
@@ -84,9 +84,9 @@ const OwnerDashboard = (props) => {
             })
             .catch(e => {
                 console.log(e)
-                // toast.error("Invalid registration", {
-                //     position: "top-right"
-                // })
+                toast.error("Invalid registration", {
+                    position: "top-right"
+                })
             })
     }
 
@@ -103,7 +103,12 @@ const OwnerDashboard = (props) => {
                     <RestaurantDetailComponent id={id} restaurantDetail={rest} menuDetail={menuDetail} editRestaurant={editRestaurant} updateMenu={updateMenu} />
                 )
             } else return ""
-        } else return <center><button style={{margin: '2rem', height: '3rem', width: '10rem', padding: '.5rem'}} onClick={() => setModalShow(true)}>Add Restaurant</button></center>
+        } else return (
+            <center>
+                <button style={{margin: '2rem', height: '3rem', width: '10rem', padding: '.5rem'}} onClick={() => setModalShow(true)}>Add Restaurant</button>
+                <h2>Please add restaurant detail</h2>
+            </center>
+        )
     }
 
     const showPopupOrNot = () => {
@@ -124,7 +129,7 @@ const OwnerDashboard = (props) => {
     }
 
     return (
-        <div style={{ backgroundColor: 'rgb(212, 196, 196)', height: '100%' }} data-backdrop="static" data-keyboard="false">
+        <div className="owner" style={{ backgroundColor: 'rgb(212, 196, 196)', height: '100%' }}>
             {showRestaurantDetail()}
             {showPopupOrNot()}
             <ToastContainer />

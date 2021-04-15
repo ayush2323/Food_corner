@@ -13,7 +13,10 @@ const DishesList = (props) => {
             <div className="cocktail-footer">
                 <h3>{itemy.ItemName}</h3>
                 <h4>₹. {itemy.price}</h4>
-                <Link to={`/owner_dish_detail/${itemy._id}`} className="btn btn-primary btn-details">Show More</Link>
+                <div className="d-flex justify-content-between">
+                <button style={{marginRight: '1rem'}} className="btn btn-primary">Delete</button>
+                <button className="btn btn-primary">Edit</button>
+                </div>
             </div>
         </article>
         </div>

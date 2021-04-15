@@ -17,7 +17,7 @@ const RestaurantDetailComponent = (props) => {
     const id = props.id
     const [modalShow, setModalShow] = useState(false);
     const [menuItem, setMenuItem] = useState({
-        ItemName: "", ItemDiscription: "", ItemImage: "", ItemCatagory: "", ItemType: "", Constituents: "", price: "", restaurantName: restaurantDetail[0].restaurantName, restaurantAddress: restaurantDetail[0].restaurantAddress, restaurantPhone: restaurantDetail[0].restaurantPhone
+        ItemName: "", ItemDiscription: "", ItemImage: "", ItemCatagory: "", ItemType: "veg", Constituents: "", price: "", restaurantName: restaurantDetail[0].restaurantName, restaurantAddress: restaurantDetail[0].restaurantAddress, restaurantPhone: restaurantDetail[0].restaurantPhone
     })
     const [dish_id, setDish_id] = useState('')
 
@@ -49,6 +49,7 @@ const RestaurantDetailComponent = (props) => {
             .then(res => {
                 console.log(res)
                 setDish_id(res.data._id)
+                setModalShow(false)
                 onHide()
             })
             .catch(e => console.log(e))
@@ -62,7 +63,6 @@ const RestaurantDetailComponent = (props) => {
                         <Col></Col>
                         <Col xs={10} className="menu_title">
                             <section className="section">
-                                <h2 className="section-title">Our Menu</h2>
                                 <div className="cocktails-center">
                                     {props.menuDetail.slice(pagination.start, pagination.end).map((item, index) => (
                                         <DishesList key={index} item={item} />
@@ -74,9 +74,6 @@ const RestaurantDetailComponent = (props) => {
                     </Row>
                     <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={props.menuDetail.length} />
                 </Container>
-                // props.menuDetail.map((item, index) => {
-                //     return <DishesList key={index} item={item} />
-                // })
             )
         } else return <h1>No Item Added</h1>
     }

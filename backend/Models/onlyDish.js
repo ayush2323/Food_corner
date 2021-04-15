@@ -22,7 +22,6 @@ const dishTemplete = new mongoose.Schema({
     },
     ItemType: {
         type: String,
-        default: "veg"
     },
     Constituents: {
         type: String
@@ -37,7 +36,7 @@ const dishTemplete = new mongoose.Schema({
     restaurantAddress: {
         type: String
     },
-    restantantPhone: {
+    restaurantPhone: {
         type: Number
     }
 })

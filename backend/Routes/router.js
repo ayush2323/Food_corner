@@ -182,14 +182,11 @@ router.patch("/dish/:id", upload, async (req, res) => {
     }
 })
 
-router.post("/dishes", upload, async (req, res) => {
+router.post("/dishes", async (req, res) => {
     try {
-        console.log(req.body)
-        let imageFile = req.file.filename
-        console.log("line 189 "+imageFile)
+        console.log("line 187 "+req.body)
         dishDetails = new dishTemplete({
             ItemName: req.body.ItemName,
-            ItemImage: imageFile,
             ItemDiscription: req.body.ItemDiscription,
             ItemCatagory: req.body.ItemCatagory,
             ItemType: req.body.ItemType,
@@ -197,7 +194,7 @@ router.post("/dishes", upload, async (req, res) => {
             price: req.body.price,
             restaurantName: req.body.restaurantName,
             restaurantAddress: req.body.restaurantAddress,
-            restantantPhone: req.body.restantantPhone
+            restaurantPhone: req.body.restaurantPhone
         })
         dishDetails.save()
             .then(data => {
