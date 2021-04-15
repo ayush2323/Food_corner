@@ -18,7 +18,7 @@ const MenuPopup = (props) => {
           <Form onSubmit={addDishes} encType="multipart/form-data">
             <FormCol name={"Item Name"} sendName={"ItemName"} value={menuItem.ItemName} controlId={'ItemName'} type={"text"} placeholder={"Enter item name"} changeHandler={ItemHandler} />
             <Form.Group>
-              <Form.File name="ItemImage" id="exampleFormControlFile1" label="Upload Item Image" />
+              <Form.File name="ItemImage" value={menuItem.ItemImage} id="exampleFormControlFile1" label="Upload Item Image" />
             </Form.Group>
             <FormCol name={"Item Discription"} sendName={"ItemDiscription"} value={menuItem.ItemDiscription} controlId={'ItemDiscription'} type={"text"} placeholder={"Enter item discription"} changeHandler={ItemHandler} />
             <FormCol name={"Item Catagory"} sendName={"ItemCatagory"} value={menuItem.ItemCatagory} controlId={'ItemCatagory'} type={"text"} placeholder={"Enter item catagory"} changeHandler={ItemHandler} />

@@ -8,11 +8,11 @@ const dishTemplete = new mongoose.Schema({
         type: String,
         // required: true
     },
-    // ItemImage: {
-    //     // data: Buffer, 
-    //     // contentType: String
-    //     type: String
-    // },
+    ItemImage: {
+        // data: Buffer, 
+        // contentType: String
+        type: String
+    },
     ItemDiscription: {
         type: String
     },

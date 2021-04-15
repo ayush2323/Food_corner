@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Item from './SubComponent/Item'
 import Loading from './Loading'
+import Pagination from './SubComponent/Pagination'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -9,10 +10,20 @@ import { useCostumHooks } from '../context'
 
 const ItemsList = (props) => {
     const {dishes, load} = useCostumHooks()
+    const [showPerPage, setShowPerPage] = useState(12)
+    const [pagination, setPagination] = useState({
+        start: 0,
+        end: showPerPage
+    })
+
+    const onPaginationChange = (start, end) => {
+        setPagination({start, end})
+    }
+
+
     if(load){
         return <Loading />
     }
-    // console.log(props.dishes)
 
     if (props.dishes.length < 1) {
         return (
@@ -31,17 +42,15 @@ const ItemsList = (props) => {
                         <section className="section">
                             <h2 className="section-title">Our Menu</h2>
                             <div className="cocktails-center">
-                                {props.dishes.map((item, index) => (
+                                {props.dishes.slice(pagination.start, pagination.end).map((item, index) => (
                                     <Item key={index} dish={item} />
                                 ))}
                             </div>
                         </section>
-                        {/* {dishes.map((item, index) => (
-                            <Item key={index} dish={item} />
-                        ))} */}
                     </Col>
                     <Col></Col>
                 </Row>
+                <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={props.dishes.length} />
             </Container>
         </div>
     )

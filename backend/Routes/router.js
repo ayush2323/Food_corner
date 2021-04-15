@@ -22,10 +22,14 @@ let upload = multer({
     storage: Storage
 }).single('ItemImage')
 
-router.post('/profile', (req, res) => {
-    upload(req, res, (err) => {
-        if (err) return;
-    })
+router.post('/upload', upload, function(req, res, next) {
+    let imsageFile = req.file.filename
+    let success = req.file.filename = "uploded successfully"
+    res.render('upload-file', {title: 'upload file', success:success})
+})
+
+router.get('/upload', function(req, res, next) {
+
 })
 
 // sign up validation
@@ -178,11 +182,14 @@ router.patch("/dish/:id", upload, async (req, res) => {
     }
 })
 
-router.post("/dishes", async (req, res) => {
+router.post("/dishes", upload, async (req, res) => {
     try {
         console.log(req.body)
+        let imageFile = req.file.filename
+        console.log("line 189 "+imageFile)
         dishDetails = new dishTemplete({
             ItemName: req.body.ItemName,
+            ItemImage: imageFile,
             ItemDiscription: req.body.ItemDiscription,
             ItemCatagory: req.body.ItemCatagory,
             ItemType: req.body.ItemType,

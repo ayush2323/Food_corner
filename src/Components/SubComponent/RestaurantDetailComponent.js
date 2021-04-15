@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Button } from 'react-bootstrap'
 import MenuPopup from '../MenuPopup'
 import DishesList from './DishesList'
+import Pagination from './Pagination'
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -13,7 +17,7 @@ const RestaurantDetailComponent = (props) => {
     const id = props.id
     const [modalShow, setModalShow] = useState(false);
     const [menuItem, setMenuItem] = useState({
-        ItemName: "", ItemDiscription: "", ItemCatagory: "", ItemType: "", Constituents: "", price: "", restaurantName: restaurantDetail[0].restaurantName, restaurantAddress: restaurantDetail[0].restaurantAddress, restaurantPhone: restaurantDetail[0].restaurantPhone
+        ItemName: "", ItemDiscription: "", ItemImage: "", ItemCatagory: "", ItemType: "", Constituents: "", price: "", restaurantName: restaurantDetail[0].restaurantName, restaurantAddress: restaurantDetail[0].restaurantAddress, restaurantPhone: restaurantDetail[0].restaurantPhone
     })
     const [dish_id, setDish_id] = useState('')
 
@@ -22,6 +26,16 @@ const RestaurantDetailComponent = (props) => {
         item_name = e.target.name
         item_value = e.target.value
         setMenuItem({ ...menuItem, [item_name]: item_value })
+    }
+
+    const [showPerPage, setShowPerPage] = useState(12)
+    const [pagination, setPagination] = useState({
+        start: 0,
+        end: showPerPage
+    })
+
+    const onPaginationChange = (start, end) => {
+        setPagination({start, end})
     }
 
     const onHide = () => setModalShow(false)
@@ -43,9 +57,26 @@ const RestaurantDetailComponent = (props) => {
     const showDishesList = () => {
         if (props.menuDetail.length != 0) {
             return (
-                props.menuDetail.map((item, index) => {
-                    return <DishesList key={index} item={item} />
-                })
+                <Container>
+                    <Row>
+                        <Col></Col>
+                        <Col xs={10} className="menu_title">
+                            <section className="section">
+                                <h2 className="section-title">Our Menu</h2>
+                                <div className="cocktails-center">
+                                    {props.menuDetail.slice(pagination.start, pagination.end).map((item, index) => (
+                                        <DishesList key={index} item={item} />
+                                    ))}
+                                </div>
+                            </section>
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                    <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={props.menuDetail.length} />
+                </Container>
+                // props.menuDetail.map((item, index) => {
+                //     return <DishesList key={index} item={item} />
+                // })
             )
         } else return <h1>No Item Added</h1>
     }
