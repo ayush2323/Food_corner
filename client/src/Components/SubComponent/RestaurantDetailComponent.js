@@ -55,7 +55,7 @@ const RestaurantDetailComponent = (props) => {
         e.preventDefault()
         console.log(menuItem)
         props.updateMenu(menuItem)
-        axios.post(`http:///localhost:4000/app/dishes`, menuItem)
+        axios.post(`https://foodcornerproject.herokuapp.com/dishes`, menuItem)
             .then(res => {
                 console.log(res)
                 setDish_id(res.data._id)

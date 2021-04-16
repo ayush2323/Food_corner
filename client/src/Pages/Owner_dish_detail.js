@@ -10,7 +10,7 @@ const Owner_dish_detail = (props) => {
     const [dishDetail, setDishDetail] = useState({})
 
     const getDishDetail = () => {
-        axios.get(`http://localhost:4000/app/owner_dish_detail/${id}`)
+        axios.get(`https://foodcornerproject.herokuapp.com/owner_dish_detail/${id}`)
             .then(res => {
                 console.log(res)
                 setDishDetail(res.data)

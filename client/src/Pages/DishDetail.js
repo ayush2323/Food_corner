@@ -10,7 +10,7 @@ const DishDetail = (props) => {
     console.log(dishDetail)
 
     const getDishDetail = () => {
-        axios.get(`http://localhost:4000/app/dish_detail/${id}`)
+        axios.get(`https://foodcornerproject.herokuapp.com/dish_detail/${id}`)
             .then(res => {
                 console.log(res.data)
                 setDishDetail(res.data)

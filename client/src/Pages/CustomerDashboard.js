@@ -25,7 +25,7 @@ const CustomerDashboard = (props) => {
     
     const showDishes = () => {
         setLoad(true)
-        axios.get(`http://localhost:4000/app/dishes`)
+        axios.get(`https://foodcornerproject.herokuapp.com/dishes`)
         .then(res => {
             setDishes(res.data)
             setTotal_dish(res.data)

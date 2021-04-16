@@ -25,7 +25,7 @@ const OwnerDashboard = (props) => {
         updateMenu[0].restaurantMenu.push(menuItem)
         setRestaurant(updateMenu)
         const addedMenu = { "restaurant": [updateMenu[0]] }
-        axios.patch(`http://localhost:4000/app/signup/dish/${id}`, addedMenu)
+        axios.patch(`https://foodcornerproject.herokuapp.com/signup/dish/${id}`, addedMenu)
             .then(res => {
                 console.log(res.data)
                 setModalShow(false)
@@ -54,7 +54,7 @@ const OwnerDashboard = (props) => {
 
     const fetchRestaurantDetails = () => {
         // setLoad(true)
-        axios.get(`http://localhost:4000/app/signup/${id}`)
+        axios.get(`https://foodcornerproject.herokuapp.com/signup/${id}`)
             .then(res => {
                 setRest(res.data.restaurant)
                 console.log(res.data.restaurant[0].restaurantMenu)
@@ -74,7 +74,7 @@ const OwnerDashboard = (props) => {
         const addedRestaurant = { "restaurant": [restaurantDetail] }
         console.log(addedRestaurant)
 
-        axios.patch(`http://localhost:4000/app/signup/${id}`, addedRestaurant)
+        axios.patch(`https://foodcornerproject.herokuapp.com/signup/${id}`, addedRestaurant)
             .then(res => {
                 toast.success("Restaurant Added", {
                     position: "top-right"

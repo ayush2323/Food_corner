@@ -48,7 +48,7 @@ const NavBar = () => {
     const submiLogin = (e) => {
         e.preventDefault()
         const { email, password } = login_user
-        axios.post('http://localhost:4000/app/login', { email, password })
+        axios.post('https://foodcornerproject.herokuapp.com/login', { email, password })
             .then(res => {
                 console.log(res)
                 window.sessionStorage.setItem("signup_name", res.data.fullName)
@@ -68,7 +68,7 @@ const NavBar = () => {
     const submitSignup = async (e) => {
         e.preventDefault()
         const { fullName, email, phone, address, password, role } = user
-        axios.post('http://localhost:4000/app/signup', { fullName, email, phone, address, password, role })
+        axios.post('https://foodcornerproject.herokuapp.com/signup', { fullName, email, phone, address, password, role })
             .then(res => {
                 console.log(res)
                 // user_name = res.data.fullName
@@ -100,7 +100,7 @@ const NavBar = () => {
     }
 
     const showNavbar = () => {
-        axios.get(`http://localhost:4000/app/signup/${user_id}`)
+        axios.get(`https://foodcornerproject.herokuapp.com/signup/${user_id}`)
             .then(res => {
                 console.log(res.data)
                 setUser_name(res.data.fullName)

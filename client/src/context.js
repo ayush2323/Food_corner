@@ -24,7 +24,7 @@ const AppProvider = ({children}) => {
     
     const showDishes = () => {
         setLoad(true)
-        axios.get(`http://localhost:4000/app/dishes`)
+        axios.get(`https://foodcornerproject.herokuapp.com/dishes`)
         .then(res => {
             setDishes(res.data)
         }).catch(e => console.log(e))
@@ -65,7 +65,7 @@ const AppProvider = ({children}) => {
     const submitSignup = async (e) => {
         e.preventDefault()
         const { fullName, email, phone, address, password, role } = user
-        axios.post('http://localhost:4000/app/signup', { fullName, email, phone, address, password, role })
+        axios.post('https://foodcornerproject.herokuapp.com/signup', { fullName, email, phone, address, password, role })
             .then(res => {
                 toast.success("Login Successfull", {
                     position: "top-right"
