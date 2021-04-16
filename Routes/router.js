@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 const cookieParser = require('cookie-parser')
 const multer = require('multer')
+const url = process.env.MONGO || "mongodb://localhost:27017/"
 
 router.use(express.static(__dirname + "./public/"))
 
