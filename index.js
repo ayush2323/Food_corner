@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 })
 app.use(express.json())
 app.use(cors())
-app.use(routeURL)
+app.use(routesUrl)
 app.use(cookieParser())
 
 if(process.env.NODE_ENV === 'production') {
